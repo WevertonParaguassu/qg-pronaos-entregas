@@ -1,2 +1,4 @@
-# qg-pronaos-entregas
-QG Pronaos · Entregas reais da esteira de produção (site estático Render Free, sem segredo nem dado pessoal)
+# QG Pronaos · Entregas
+
+Site estático (Render Free) com as entregas reais da esteira de produção do QG Pronaos.
+Sem segredo e sem dado pessoal. Binários vão como `.b64` e o `build.sh` decodifica no deploy.
