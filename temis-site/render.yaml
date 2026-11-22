@@ -1,4 +1,6 @@
 # Blueprint só do site estático oficial da Têmis (serviço temis-os, adotado). Grátis; sem add-on.
+# routes (22/11/2026, vendas t1877u): conta/painel/api viram proxy (rewrite externo) para o app na VPS4 via Caddy da VPS1.
+# Rollback: remover o bloco routes e sincronizar o Blueprint (ou apagar as regras no painel Redirects/Rewrites).
 services:
   - type: web
     runtime: static
@@ -12,3 +14,22 @@ services:
     domains:
       - agentetemis.com
       - www.agentetemis.com
+    routes:
+      - type: rewrite
+        source: /conta
+        destination: https://temis.75-119-157-181.sslip.io/conta/
+      - type: rewrite
+        source: /conta/*
+        destination: https://temis.75-119-157-181.sslip.io/conta/*
+      - type: rewrite
+        source: /painel
+        destination: https://temis.75-119-157-181.sslip.io/painel
+      - type: rewrite
+        source: /api/*
+        destination: https://temis.75-119-157-181.sslip.io/api/*
+      - type: rewrite
+        source: /login
+        destination: https://temis.75-119-157-181.sslip.io/login
+      - type: rewrite
+        source: /sair
+        destination: https://temis.75-119-157-181.sslip.io/sair
