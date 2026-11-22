@@ -5,5 +5,7 @@ rm -rf out && mkdir -p out
 cat temis-previews/site.tgz.b64.b1 temis-previews/site.tgz.b64.b2 temis-previews/site.tgz.b64.b3 temis-previews/site.tgz.b64.b4 | base64 -d | tar xz -C out
 # v8 (22/11): pacote c1 por cima (index.html atualizado + /v8/)
 base64 -d temis-previews/site.tgz.b64.c1 | tar xz -C out
-test -f out/index.html && test -f out/v1/planos/index.html && test -f out/v7/planos/index.html && test -f out/v8/planos/index.html && test -f out/v8/img/temis-wm-v8.webp
+# v8.1 (22/11, t1807u): quadros translúcidos + /v8_1/ e índice atualizado
+base64 -d temis-previews/site.tgz.b64.d1 | tar xz -C out
+test -f out/index.html && test -f out/v1/planos/index.html && test -f out/v7/planos/index.html && test -f out/v8/planos/index.html && test -f out/v8/img/temis-wm-v8.webp && test -f out/v8_1/planos/index.html && test -f out/v8_1/img/temis-wm-v8.webp && test -f out/v8_1/assets/temis.css
 echo "[temis-previews] ok: $(find out -type f | wc -l) arquivos"
