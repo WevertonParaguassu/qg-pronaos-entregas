@@ -12,5 +12,5 @@ base64 -d temis-previews/site.tgz.b64.e1 | tar xz -C out
 # final (22/11, t1847u): v9a pronta para o ar, sem lista de espera, em /final/
 base64 -d temis-previews/site.tgz.b64.f1 | tar xz -C out
 test -f out/index.html && test -f out/v1/planos/index.html && test -f out/v7/planos/index.html && test -f out/v8/planos/index.html && test -f out/v8/img/temis-wm-v8.webp && test -f out/v8_1/planos/index.html && test -f out/v8_1/img/temis-wm-v8.webp && test -f out/v8_1/assets/temis.css
-test -f out/v9a/afiliados/index.html && test -f out/v9b/afiliados/index.html && test -f out/v9a/assets/site.css && test -f out/v9b/img/temis-720.webp && test -f out/final/index.html && test -f out/final/afiliados/index.html && test -f out/final/assets/site.css
+test -f out/v9a/afiliados/index.html && test -f out/v9b/afiliados/index.html && test -f out/v9a/assets/site.css && test -f out/v9b/img/temis-720.webp && test -f out/final/index.html && test -f out/final/afiliados/index.html && test -f out/final/assets/site.css && test -f out/final-v9a/index.html
 echo "[temis-previews] ok: $(find out -type f | wc -l) arquivos"
