@@ -1,10 +1,10 @@
 # temis-previews (teste, não oficial)
 
-Prévias 1–6 do site Têmis, só para revisão. Site estático gratuito no Render.
+Prévias 1–7 do site Têmis, só para revisão. Site estático gratuito no Render.
 Não é o serviço `temis-os` nem a branch `temis-site`.
 
 - `/` índice
-- `/v1/` … `/v6/` e respectivos `/planos/`
+- `/v1/` … `/v7/` e respectivos `/planos/`
 - `noindex` em todas as páginas
 
-Pacote: `site.tgz.b64.a1` + `a2` + `a3` (sha256 do tarball em `site.tgz.sha256`).
+Pacote: `site.tgz.b64.b1` + `b2` + `b3` + `b4` (sha256 em `site.tgz.sha256`).
