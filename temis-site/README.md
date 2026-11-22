@@ -1,7 +1,9 @@
-# Têmis — site público (estático) · v8.1 (22/11/2026)
-Design v8.1: só azul e dourado, Têmis dourada de corpo inteiro sempre visível (marca d'água fixa), quadros translúcidos para a estátua transparecer, ícones line-art dourados próprios (sem emoji), ilustrações jurídicas futuristas por categoria, leitura reforçada, mobile primeiro.
-51 rotas: início, catálogo (por tarefa, por Têmis, combos, bancada), 28 páginas de Têmis, 9 páginas de tarefa, áreas, combos, modalidades (sem preço: lista de espera), API e equipes, biblioteca, laboratório fictício, sobre, termos, privacidade (+ /protetora-leal e /advogado-do-diabo).
-Pré-lançamento: nenhuma análise, login, upload ou cobrança. Plataforma e dados ficam privados.
+# Têmis — site público (estático) · mistura final (22/11/2026)
+
+Hero da prévia v9b, conteúdo e cards da v8.1, Têmis que ao rolar vira marca d'água na mesma posição e dimensão.
+Sem lista de espera, sem preços, sem CPF/CNPJ. Contato: contato.pronaos@gmail.com.
+Uma amostra gratuita por pessoa. Programa de afiliados por comissão (percentual a definir).
+
 `site.tgz.b64` é desempacotado por `temis-site/build.sh` no Render (serviço `temis-os`, publica `out/`).
-Rollback: branch `temis-site-rollback-20261122-eb3c187` (commit eb3c187, site v8); v8-anterior também em histórico; v2 em `temis-site-rollback-20261122-d422354`; v1 em 339fbc8.
+Rollback: branch `temis-site-rollback-20261122-8dacab2c` (commit 8dacab2c, site v8.1).
 Rodapé/termos: só a marca Têmis OS e contato.pronaos@gmail.com, nunca CPF/CNPJ, nome ou endereço.
