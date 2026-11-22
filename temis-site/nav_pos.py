@@ -208,7 +208,8 @@ for p in OUT.rglob("*.html"):
     s = p.read_text()
     if 'name="robots" content="noindex"' in s and len(s) < 1200: continue
     o = s
-    s = s.replace("Sem cobrança no site · uma amostra gratuita por pessoa", "Teste grátis, um por pessoa · planos e preços após o login")
+    s = s.replace("Sem cobrança no site · uma amostra gratuita por pessoa", "Teste grátis, um por CPF ou CNPJ · planos e preços após o login")
+    s = s.replace("Uma amostra gratuita por pessoa. Sem cartão, sem compromisso.", "Um teste grátis por CPF ou CNPJ. Sem cartão, sem compromisso.")
     s = s.replace('<a class="btn btn-sm" href="/amostra/">Amostra grátis</a>', '<a href="/conta/entrar">Entrar</a><a class="btn btn-sm" href="/conta/cadastro">Teste grátis</a>')
     s = s.replace('<a href="/amostra/">Amostra grátis</a>', '<a href="/conta/cadastro">Teste grátis</a><a href="/conta/entrar">Entrar</a>')
     s = re.sub(r'<a class="mcta" href="/amostra/">[^<]*</a>', '<a class="mcta" href="/conta/cadastro">Começar o teste grátis</a>', s)
@@ -217,6 +218,11 @@ for p in OUT.rglob("*.html"):
     if '<a href="/planos/">Planos</a>' not in s: s = s.replace('<a href="/para-quem-e/">Para quem é</a>', '<a href="/planos/">Planos</a><a href="/para-quem-e/">Para quem é</a>', 1)
     s = re.sub(r'(Todas|Todos) em preparação, no mesmo catálogo[^.<]*\.', 'Em funcionamento, com teste grátis.', s)
     s = re.sub(r'<span class="pill">Em preparação</span>', '', s)
+    for a, b in (("Oferecemos uma amostra gratuita por pessoa, pedida pelo formulário do site.", "Oferecemos um teste grátis por CPF ou CNPJ, liberado na hora ao criar a conta."),
+                 ("Peça em agentetemis.com/amostra/ ou pelo e-mail contato.pronaos@gmail.com.", "Crie a conta em agentetemis.com/conta/cadastro e use na hora."),
+                 ("Como pedir uma amostra grátis?", "Como fazer o teste grátis?"),
+                 ("Uma amostra gratuita por pessoa", "Um teste grátis por CPF ou CNPJ"), ("Uma amostra por pessoa", "Um teste grátis por CPF ou CNPJ"), ("Uma por pessoa, sem cartão", "Uma por CPF ou CNPJ, sem cartão")):
+        s = s.replace(a, b)
     s = re.sub(r',? ?todas em preparação', '', s)
     s = s.replace("Cada módulo declara o que está pronto, em preparação ou bloqueado.", "Só aparece no site o que passou em teste de funcionamento.")
     if s != o: p.write_text(s)
@@ -225,10 +231,11 @@ for p in OUT.rglob("*.html"):
 am = OUT / "amostra" / "index.html"
 if am.exists():
     s = am.read_text()
-    s = re.sub(r'<form id="form-amostra".*?</form>', '<div class="ficha"><div><h2>Teste grátis automático</h2><p>Crie a conta com o seu número da OAB e use na hora: '
+    s = re.sub(r'<form id="form-amostra".*?</form>', '<div class="ficha"><div><h2>Teste grátis automático</h2><p>Crie a conta com o seu CPF ou o CNPJ do escritório e use na hora (um teste por documento): '
                'uma minuta completa, até 20 mensagens ou 30 dias, o que vier primeiro.</p><a class="btn" href="/conta/cadastro">Criar conta e testar</a>'
                '<p class="fine">Já tem conta? <a href="/conta/entrar">Entrar</a>.</p></div></div>', s, flags=re.S)
     s = s.replace("Conte o que você quer testar e retornamos no e-mail informado.", "Crie a conta e use na hora, sem esperar retorno.")
+    s = s.replace("Uma amostra por pessoa, sem cartão e sem compromisso.", "Um teste grátis por CPF ou CNPJ, sem cartão e sem compromisso.")
     am.write_text(s)
 
 # 8) CSS, sitemap, _redirects
