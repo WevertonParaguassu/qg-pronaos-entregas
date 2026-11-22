@@ -131,7 +131,9 @@ for f in FRENTES:
         main = (f'<section class="hero hero-page"><div class="wrap hero-in"><div class="hero-copy">{c}'
                 f'<a class="voltar" href="/temis/{f["slug"]}/">‹ Voltar para {E(f["nome"])}</a>'
                 f'<p class="eyebrow">{E(f["nome"])}</p><h1>{E(t["nome"])}</h1><p class="lead">{E(t["faz"])}</p>'
-                f'<p><span class="selo-ok">Em funcionamento · testada</span></p>{CTA.format(t="Experimentar no teste grátis")}</div>{STATUE}</div></section>'
+                f'<p><span class="selo-ok">Em funcionamento · testada</span></p>'
+                f'<p class="fine">Incluída a partir do plano <b>{E(t.get("plano_minimo") or "Ultra")}</b>. <a href="/planos/">Ver o que cada plano inclui ›</a></p>'
+                f'{CTA.format(t="Experimentar no teste grátis")}</div>{STATUE}</div></section>'
                 f'<section class="sec"><div class="wrap"><div class="ficha">'
                 f'<div><h2>Exemplo</h2><p>{E(t["exemplo"])}</p><p class="fine">Caso fictício, para ilustrar.</p></div>'
                 f'<div><h2>O que você recebe</h2><ul>{"".join("<li>" + E(x) + "</li>" for x in t["recebe"])}</ul></div>'
@@ -153,6 +155,24 @@ for i, t in enumerate(TAR):
             + (f'<div class="sec-head" style="margin-top:2.5rem"><h2>Outras tarefas</h2></div><div class="lista-t">{outras}</div>' if outras else "")
             + '</div></section>')
     pagina(f"tarefas/{t['slug']}/", f"{t['nome']} com IA jurídica · Têmis", t["faz"], main, ld)
+
+
+# 4b) planos (público, sem preço: preço só depois do login)
+PP = CFG.get("planos_publicos") or []
+if PP:
+    c, ld = crumbs([("Início", "/"), ("Planos", None)])
+    cards = "".join(f'<div id="{p["slug"]}"><p class="eyebrow">Degrau {i+1} de {len(PP)}</p><h2>{E(p["nome"])}</h2><p>{E(p["resumo"])}</p>'
+                    f'<details><summary>Para quem é, o que entrega e o que não inclui ›</summary><p><b>Para quem:</b> {E(p["para_quem"])}</p>'
+                    f'<p><b>O que entrega:</b> {E(p["entrega"])}</p><p><b>Exemplo:</b> {E(p["exemplo"])}</p><p><b>Não inclui:</b> {E(p["nao_inclui"])}</p></details></div>'
+                    for i, p in enumerate(PP))
+    main = (f'<section class="hero hero-page"><div class="wrap hero-in"><div class="hero-copy">{c}<p class="eyebrow">Planos</p>'
+            f'<h1>Suba de degrau <em>quando quiser.</em></h1><p class="lead">Solo → Profissional → Escritório → Max → Ultra. Também dá para comprar só tarefas '
+            f'(petição inicial, análise dos autos) ou um combo pronto. Os preços aparecem depois do login.</p>'
+            f'<div class="actions"><a class="btn" href="/conta/cadastro">Começar o teste grátis</a><a class="btn btn-ghost" href="/conta/entrar?volta=/conta/planos">Entrar e ver os preços ›</a></div></div>{STATUE}</div></section>'
+            f'<section class="sec"><div class="wrap"><div class="ficha">{cards}</div>'
+            f'<p class="fine" style="margin-top:1.5rem">Só o Têmis Max e o Têmis Ultra incluem o agente Têmis pessoal do escritório, com memória e aprendizado isolados. '
+            f'Minutas são rascunhos para revisão de advogado. Direito de arrependimento de 7 dias (CDC art. 49).</p></div></section>')
+    pagina("planos/", "Planos da Têmis · do Solo ao Ultra", "Planos da Têmis do Solo ao Ultra: o que cada um entrega, para quem é e o que não inclui. Teste grátis; preços após o login.", main, ld, "/planos/")
 
 # 5) ocultos: redirecionam para a frente (ou para /temis/), sem índice
 def stub(rel, alvo):
@@ -193,6 +213,8 @@ for p in OUT.rglob("*.html"):
     s = s.replace('<a href="/amostra/">Amostra grátis</a>', '<a href="/conta/cadastro">Teste grátis</a><a href="/conta/entrar">Entrar</a>')
     s = re.sub(r'<a class="mcta" href="/amostra/">[^<]*</a>', '<a class="mcta" href="/conta/cadastro">Começar o teste grátis</a>', s)
     s = re.sub(r'href="/amostra/"', 'href="/conta/cadastro"', s)
+    s = s.replace(">Solicitar amostra grátis<", ">Começar o teste grátis<").replace(">Peça sua amostra grátis<", ">Começar o teste grátis<").replace(">Solicitar amostra<", ">Começar o teste grátis<")
+    if '<a href="/planos/">Planos</a>' not in s: s = s.replace('<a href="/para-quem-e/">Para quem é</a>', '<a href="/planos/">Planos</a><a href="/para-quem-e/">Para quem é</a>', 1)
     s = re.sub(r'(Todas|Todos) em preparação, no mesmo catálogo[^.<]*\.', 'Em funcionamento, com teste grátis.', s)
     s = re.sub(r'<span class="pill">Em preparação</span>', '', s)
     s = re.sub(r',? ?todas em preparação', '', s)
@@ -214,7 +236,7 @@ css = OUT / "assets" / "site.css"
 if "nav_pos.py" not in css.read_text(): css.write_text(css.read_text() + CSS)
 sm = OUT / "sitemap.xml"; x = sm.read_text()
 locs = re.findall(r"<loc>([^<]+)</loc>", x)
-novos = [f"{SITE}/temis/{f['slug']}/" for f in FRENTES] + [f"{SITE}/temis/{t['slug']}/" for t in VIS] + [f"{SITE}/tarefas/{t['slug']}/" for t in TAR]
+novos = [f"{SITE}/planos/"] + [f"{SITE}/temis/{f['slug']}/" for f in FRENTES] + [f"{SITE}/temis/{t['slug']}/" for t in VIS] + [f"{SITE}/tarefas/{t['slug']}/" for t in TAR]
 fora = {f"{SITE}/temis/{t['slug']}/" for t in OCULTOS} | {f"{SITE}/tarefas/{t['slug']}/" for t in TAR_OC} | {f"{SITE}/amostra/"}
 todos = [l for l in locs if l not in fora] + [n for n in novos if n not in locs]
 sm.write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
