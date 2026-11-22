@@ -1,0 +1,14 @@
+# Blueprint só do site estático oficial da Têmis (serviço temis-os, adotado). Grátis; sem add-on.
+services:
+  - type: web
+    runtime: static
+    name: temis-os
+    repo: https://github.com/WevertonParaguassu/qg-pronaos-entregas
+    branch: temis-site
+    buildCommand: bash temis-site/build.sh
+    staticPublishPath: out
+    autoDeployTrigger: commit
+    pullRequestPreviewsEnabled: false
+    domains:
+      - agentetemis.com
+      - www.agentetemis.com
