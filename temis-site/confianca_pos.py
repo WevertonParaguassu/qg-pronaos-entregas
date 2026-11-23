@@ -39,8 +39,15 @@ NAV = json.loads(_find_nav().read_text(encoding="utf-8"))
 FRENTES = {f["slug"]: f for f in NAV["frentes"]}
 TEMIS = list(NAV["temis"])
 TAREFAS = list(NAV.get("tarefas") or [])
-AVAIL = [t for t in TEMIS if t.get("testado")]
-SOON = [t for t in TEMIS if not t.get("testado")]
+def eh_contratavel(t):
+    return bool(t.get("testado") or t.get("contratavel"))
+
+def eh_incluido(t):
+    return bool(t.get("incluido")) and not eh_contratavel(t)
+
+AVAIL = [t for t in TEMIS if eh_contratavel(t)]
+SOON = [t for t in TEMIS if not eh_contratavel(t) and not eh_incluido(t)]
+INCLUIDOS = [t for t in TEMIS if eh_incluido(t)]
 
 # Textos honestos para as 10 apps ainda não contratáveis avulsas (facetas.json + TEMIS_AGENTE.md)
 SOON_COPY = {
@@ -373,7 +380,7 @@ def rewrite_home() -> None:
 <article class="mini"><h3>Sem promessa de resultado</h3><p>Sem probabilidade de vitória e sem captação. Respeito ao Provimento 205/2021 da OAB e às regras equivalentes de cada jurisdição.</p></article>
 <article class="mini"><h3>Documentos na nossa plataforma</h3><p>O site aberto não recebe autos. Depois do login, os documentos vão para a plataforma própria, na VPS4, com OCR e modelo locais. Detalhes em Segurança e sigilo.</p></article>
 <article class="mini"><h3>Isolamento por escritório</h3><p>Cada escritório tem o seu espaço. Em teste com dois escritórios sintéticos (22/11/2026), um não enxergou caso, documento, memória nem tarefa do outro.</p></article>
-<article class="mini"><h3>Estado honesto</h3><p>O catálogo lista as 28 aplicações. Só convidamos a contratar ou testar o que já pode ser contratado; o restante permanece visível, ainda não disponível avulso.</p></article>
+<article class="mini"><h3>Estado honesto</h3><p>O catálogo lista as 28 aplicações. 25 aplicações podem ser contratadas avulsas depois do login (16 com conector MCP testado e 9 pela página do agente). Fontes do Direito (legado) entra em todos os planos e não é vendida à parte.</p></article>
 </div>
 <p><a class="more" href="/seguranca/">Como os documentos e a IA local funcionam ›</a></p>
 </div></section>
@@ -461,9 +468,12 @@ def rewrite_privacidade() -> None:
     path.write_text(s, encoding="utf-8")
 
 
-def disp(ok: bool) -> str:
-    if ok:
-        return '<span class="disp">Disponível para contratação avulsa · preço após o login</span>'
+def disp(t) -> str:
+    if eh_incluido(t):
+        return '<span class="disp">Incluída em todos os planos · a partir do teste grátis</span>'
+    if eh_contratavel(t):
+        extra = " · página do agente Têmis" if t.get("superficie") == "agente" or (t.get("contratavel") and not t.get("testado")) else ""
+        return f'<span class="disp">Disponível para contratação avulsa{extra} · preço após o login</span>'
     return '<span class="disp disp-nao">Ainda não disponível para contratação avulsa</span>'
 
 
@@ -490,10 +500,9 @@ def rewrite_catalog() -> None:
         cards = []
         for t in items:
             tt = app_copy(t)
-            ok = bool(t.get("testado"))
             cards.append(
                 f'<a href="/temis/{E(t["slug"])}/"><h3>{E(t["nome"])}</h3>'
-                f'<p>{E(tt["faz"][:180])}</p>{disp(ok)}<span class="abrir">Abrir ›</span></a>'
+                f'<p>{E(tt["faz"][:180])}</p>{disp(t)}<span class="abrir">Abrir ›</span></a>'
             )
         blocos.append(
             f'<div class="frentes-bloco" id="{E(fr["slug"])}">'
@@ -522,7 +531,7 @@ def rewrite_catalog() -> None:
     n = len(TEMIS)
     for i, t in enumerate(TEMIS):
         tt = app_copy(t)
-        ok = bool(t.get("testado"))
+        ok = eh_contratavel(t)
         fr = FRENTES.get(t["frente"], {"nome": t["frente"], "slug": t["frente"]})
         prev = TEMIS[i - 1] if i else None
         nxt = TEMIS[i + 1] if i + 1 < n else None
@@ -538,11 +547,29 @@ def rewrite_catalog() -> None:
                 '<a class="btn btn-ghost" href="/conta/cadastro">Começar o teste grátis</a>'
                 '<a class="btn btn-ghost" href="/montar/">Montar o conjunto</a></div>'
             )
+            honesto = (
+                '<p class="fine">Esta aplicação é entregue pela página do agente Têmis. '
+                "O conector MCP dedicado ainda não está no ar.</p>"
+                if (t.get("superficie") == "agente" or (t.get("contratavel") and not t.get("testado")))
+                else '<p class="fine">Tudo sai como rascunho para revisão do advogado responsável. Quem fala é sempre a Têmis.</p>'
+            )
             como = (
                 "<div><h2>Como contratar</h2><p>Depois do login você vê o preço mensal desta aplicação, "
                 "pode somá-la a outras (monte o seu conjunto) ou escolher um combo pronto. "
                 "Nos pacotes por tarefa, a Têmis não revela quais aplicações atuaram.</p>"
-                '<p class="fine">Tudo sai como rascunho para revisão do advogado responsável. Quem fala é sempre a Têmis.</p></div>'
+                + honesto + "</div>"
+            )
+        elif eh_incluido(t):
+            cta = (
+                '<p class="fine">Esta aplicação (adaptador legado) entra em todos os planos, a partir do teste grátis. '
+                "A aplicação vigente de consulta a fontes é Fontes do Direito. Não é vendida à parte.</p>"
+                '<div class="cta-duo"><a class="btn" href="/conta/cadastro">Começar o teste grátis</a>'
+                '<a class="btn btn-ghost" href="/temis/fontes-do-direito-v3/">Ver Fontes do Direito</a></div>'
+            )
+            como = (
+                "<div><h2>Como entra no seu plano</h2><p>Não há preço avulso. Ela acompanha o teste grátis e os planos pagos, "
+                "como adaptador legado. A consulta oficial de fontes usa Fontes do Direito.</p>"
+                '<p class="fine">Tudo sai como rascunho para revisão do advogado responsável.</p></div>'
             )
         else:
             cta = (
@@ -635,7 +662,9 @@ def rewrite_montar_combos_tarefas() -> None:
     # montar
     apps = "".join(
         f'<li><a href="/temis/{E(t["slug"])}/">{E(t["nome"])}</a> — '
-        + ("disponível para contratação avulsa; preço após o login." if t.get("testado") else "ainda não disponível para contratação avulsa.")
+        + ("incluída em todos os planos; não é vendida à parte." if eh_incluido(t)
+           else "disponível para contratação avulsa; preço após o login." if eh_contratavel(t)
+           else "ainda não disponível para contratação avulsa.")
         + "</li>"
         for t in TEMIS
     )

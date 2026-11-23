@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Pós-processador do site público da Têmis (roda no build do Render, depois do untar em out/).
 Navegação em camadas: Início → frente (/temis/<frente>/) → Têmis (/temis/<slug>/) e tarefas (/tarefas/<slug>/).
-Só mostra o que passou teste funcional (navegacao.json, campo 'testado'). Não mexe no SEO de base,
-no arquivo de verificação do Google nem na estátua. Rollback: tirar a linha do build.sh que chama este script."""
+Mostra o que é testado (MCP ao vivo), contratável (página do agente) ou incluído nos planos.
+Não mexe no SEO de base, no arquivo de verificação do Google nem na estátua. Rollback: tirar a linha do build.sh que chama este script."""
 import json, re, sys, html, pathlib
 
 OUT = pathlib.Path(sys.argv[1] if len(sys.argv) > 1 else "out")
@@ -10,8 +10,10 @@ CFG = json.loads((pathlib.Path(__file__).parent / "navegacao.json").read_text())
 SITE = "https://agentetemis.com"
 E = html.escape
 FR = {f["slug"]: f for f in CFG["frentes"]}
-VIS = [t for t in CFG["temis"] if t.get("testado")]
-OCULTOS = [t for t in CFG["temis"] if not t.get("testado")]
+def _visivel(t):
+    return bool(t.get("testado") or t.get("contratavel") or t.get("incluido"))
+VIS = [t for t in CFG["temis"] if _visivel(t)]
+OCULTOS = [t for t in CFG["temis"] if not _visivel(t)]
 TAR = [t for t in CFG["tarefas"] if t.get("testado")]
 TAR_OC = [t for t in CFG["tarefas"] if not t.get("testado")]
 def da_frente(f): return [t for t in VIS if t["frente"] == f]
@@ -238,23 +240,35 @@ if am.exists():
     s = s.replace("Uma amostra por pessoa, sem cartão e sem compromisso.", "Um teste grátis por CPF ou CNPJ, sem cartão e sem compromisso.")
     am.write_text(s)
 
-# 7b) selo com o ROSTO da Têmis (close na face da estátua, anel dourado, nítido em 2x) em todas as páginas + favicons (t1921u)
+# 7b) selo com a BALANÇA (símbolo grego de Têmis, dourado sobre azul) em todas as páginas + favicons (t1940u)
 import base64 as _b64, io as _io, tarfile as _tar
-_rz = pathlib.Path(__file__).with_name("rosto.tgz.b64")
+_rz = pathlib.Path(__file__).with_name("balanca.tgz.b64")
+if not _rz.exists():
+    _rz = pathlib.Path(__file__).with_name("rosto.tgz.b64")
 if _rz.exists():
     with _tar.open(fileobj=_io.BytesIO(_b64.b64decode(_rz.read_text())), mode="r:gz") as tf:
         for m in tf.getmembers():
-            dst = OUT / ("img/" + m.name if m.name.startswith("temis-rosto") else m.name)
-            dst.parent.mkdir(parents=True, exist_ok=True); dst.write_bytes(tf.extractfile(m).read())
-    SELO = ('<img class="brand-rosto" src="/img/temis-rosto-96.webp" srcset="/img/temis-rosto-96.webp 2x, /img/temis-rosto-192.webp 4x" '
+            name = pathlib.Path(m.name).name
+            if not name or m.isdir():
+                continue
+            if name.startswith("temis-") or name.endswith(".svg") and "balanca" in name:
+                dst = OUT / "img" / name
+            elif name.startswith("favicon") or name.startswith("apple-touch") or name.startswith("icon-"):
+                dst = OUT / name
+            else:
+                dst = OUT / "img" / name
+            dst.parent.mkdir(parents=True, exist_ok=True)
+            dst.write_bytes(tf.extractfile(m).read())
+    SELO = ('<img class="brand-rosto" src="/img/temis-balanca-96.webp" srcset="/img/temis-balanca-96.webp 2x, /img/temis-balanca-192.webp 4x" '
             'width="40" height="40" alt="" aria-hidden="true" decoding="async">')
     for p in OUT.rglob("*.html"):
-        h = p.read_text(); h2 = re.sub(r'(<a class="brand"[^>]*>)<svg viewBox="0 0 64 64".*?</svg>', lambda m: m.group(1) + SELO, h, count=1, flags=re.S)
-        h2 = re.sub(r'<source type="image/avif"(?: media="[^"]*")? srcset="/img/temis-(?:720|420)\.avif">', "", h2)   # AVIF da estátua sem transparência = caixa preta; o WebP tem alfa
+        h = p.read_text()
+        h2 = re.sub(r'(<a class="brand"[^>]*>)(?:<img class="brand-rosto"[^>]*>|<svg viewBox="0 0 64 64".*?</svg>)', lambda m: m.group(1) + SELO, h, count=1, flags=re.S)
+        h2 = re.sub(r'<source type="image/avif"(?: media="[^"]*")? srcset="/img/temis-(?:720|420)\.avif">', "", h2)
         if '<link rel="icon" href="/favicon.svg"' in h2 and 'href="/favicon.ico"' not in h2:
             h2 = h2.replace('<link rel="icon" href="/favicon.svg"', '<link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" href="/favicon.svg"', 1)
         if h2 != h: p.write_text(h2)
-    CSS += ".brand img.brand-rosto{width:40px;height:40px;border-radius:50%;display:block;flex:none;box-shadow:0 0 0 1px #d4af5a55}\n"
+    CSS += ".brand img.brand-rosto{width:40px;height:40px;border-radius:50%;display:block;flex:none;box-shadow:0 0 0 1px #E0C078aa,0 0 0 3px #0B1A33}\n"
 stub("teste-gratis", "/conta/cadastro"); stub("teste-gratuito", "/conta/cadastro")
 
 # 8) CSS, sitemap, _redirects
