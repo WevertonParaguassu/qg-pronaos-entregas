@@ -7,4 +7,6 @@ base64 -d temis-site/site.tgz.b64 | tar xz -C out
 python3 temis-site/nav_pos.py out
 # SEO, termos, sugestões e avaliações honestas. Rollback: apagar a linha abaixo (o pacote e o nav_pos ficam iguais).
 python3 temis-site/seo_pos.py out
+# Confiança, nova home, laboratório e catálogo das 28 (t1932u/t1933u). Rollback: apagar só esta linha.
+python3 temis-site/confianca_pos.py out
 test -f out/index.html && echo "[temis-site] ok: $(find out -type f | wc -l) arquivos"
