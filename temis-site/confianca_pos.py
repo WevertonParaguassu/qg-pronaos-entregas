@@ -40,9 +40,13 @@ FRENTES = {f["slug"]: f for f in NAV["frentes"]}
 TEMIS = list(NAV["temis"])
 TAREFAS = list(NAV.get("tarefas") or [])
 def eh_contratavel(t):
+    if not isinstance(t, dict):
+        return bool(t)
     return bool(t.get("testado") or t.get("contratavel"))
 
 def eh_incluido(t):
+    if not isinstance(t, dict):
+        return False
     return bool(t.get("incluido")) and not eh_contratavel(t)
 
 AVAIL = [t for t in TEMIS if eh_contratavel(t)]
@@ -589,7 +593,7 @@ def rewrite_catalog() -> None:
 <p class="eyebrow">{E(fr["nome"])}</p>
 <h1>{E(t["nome"])}</h1>
 <p class="lead">{E(tt["faz"])}</p>
-{disp(ok)}
+{disp(t)}
 {cta}
 </div></div></section>
 <section class="sec"><div class="wrap"><div class="ficha">
