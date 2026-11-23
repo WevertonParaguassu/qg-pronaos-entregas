@@ -526,7 +526,18 @@ def patch_home_plataforma() -> None:
     else:
         print("[laboratorio_pos] aviso: #demonstracao não encontrado na home")
     if nhero == 0:
-        print("[laboratorio_pos] aviso: hero-shot não encontrado na home")
+        # O pacote atual da home já não traz figure.hero-shot; recoloca a captura no hero.
+        s4, nins = re.subn(
+            r'(<p class="fine">Petições, recursos, laudos, provas e análises.*?</p>\s*</div>)\s*(</div></section>)',
+            r'\1\n' + hero_img + r'\n\2',
+            s,
+            count=1,
+        )
+        if nins:
+            s = s4
+            print("[laboratorio_pos] home: hero-shot inserido no hero-in")
+        else:
+            print("[laboratorio_pos] aviso: hero-shot não encontrado na home")
     p.write_text(s, encoding="utf-8")
     print(f"[laboratorio_pos] home: hero={nhero} demonstracao={nd}")
 
