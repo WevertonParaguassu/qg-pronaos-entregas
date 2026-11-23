@@ -6,6 +6,7 @@
 - laudos.pdf para baixar (o PDF gerado no mesmo teste).
 - Capturas de interface enganosas (processando preso, kit do agente rotulado como Profissional, rastro cru no chat) são removidas.
 - Peças mantidas (1ª página da minuta e do laudos.pdf) ganham rótulo honesto e lupa (o lightbox global vem do aquisicao_pos).
+- Capturas honestas da plataforma (Profissional e Ultra, sessão sintética 23/11/2026), com lupa e rótulo de plano (t1957u).
 Roda depois de aquisicao_pos e privacidade_pos. Rollback: apagar a linha no build.sh.
 """
 from __future__ import annotations
@@ -372,13 +373,172 @@ def patch_home_shots() -> None:
         p.write_text(s, encoding="utf-8")
 
 
+PLAT_V = "t1957u"
+PLAT_MARCA = "<!--plat-shots-t1957u-->"
+PLAT_SHOTS = [
+    ("profissional_painel_desktop.webp", "Plano Profissional · painel",
+     "Painel no Têmis Profissional, sessão sintética de 23/11/2026. O Kit da inicial com o agente e o Pedir à Têmis aparecem como convite para o Max e o Ultra."),
+    ("profissional_caso_desktop.webp", "Plano Profissional · caso",
+     "Caso sintético no Têmis Profissional, 23/11/2026: documentos e minutas do teste, com Conversa rápida e Gerar minuta. O agente permanece no Max e no Ultra."),
+    ("profissional_facetas_desktop.webp", "Plano Profissional · Facetas da Têmis",
+     "Lista das facetas no Têmis Profissional, sessão sintética de 23/11/2026."),
+    ("ultra_painel_desktop.webp", "Plano Ultra · painel",
+     "Painel no Têmis Ultra, sessão sintética de 23/11/2026, com o Kit da inicial (agente), Pedir à Têmis e o Conselho das 4."),
+    ("ultra_kit_desktop.webp", "Plano Ultra · Kit da inicial (agente)",
+     "Kit da inicial no Têmis Ultra, sessão sintética de 23/11/2026, ainda sem o agente ter rodado. O Conselho das 4 neste caso é opt-in."),
+    ("ultra_facetas_desktop.webp", "Plano Ultra · Facetas da Têmis",
+     "Lista das facetas no Têmis Ultra, sessão sintética de 23/11/2026."),
+]
+PLAT_CSS = """
+/* laboratorio_pos plataforma t1957u */
+.plat-shots{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.1rem;margin-top:1.2rem}
+.plat-shots figure.shot{margin:0;background:rgba(6,16,34,.88);border:1px solid rgba(224,192,120,.35);border-radius:16px;overflow:hidden}
+.plat-shots img{width:100%;height:auto;display:block;background:#0B1A33}
+.plat-shots figcaption{padding:.65rem .85rem 0.9rem;color:var(--head,#e8e3d3);font:400 .86rem/1.45 var(--sans,system-ui,sans-serif)}
+.hero-shot .rotulo-print{position:relative;z-index:1}
+"""
+
+def unpack_plataforma_shots() -> None:
+    dest = OUT / "img" / "plataforma"
+    dest.mkdir(parents=True, exist_ok=True)
+    packed = HERE / "plataforma_shots.tgz.b64"
+    src_dir = HERE / "img_plataforma"
+    if packed.is_file():
+        raw = base64.b64decode("".join(packed.read_text().split()))
+        with tarfile.open(fileobj=io.BytesIO(raw), mode="r:gz") as tf:
+            tf.extractall(dest)
+    elif src_dir.is_dir():
+        for sp in src_dir.glob("*.webp"):
+            (dest / sp.name).write_bytes(sp.read_bytes())
+    else:
+        print("[laboratorio_pos] aviso: plataforma_shots.tgz.b64 ausente")
+        return
+    n = len(list(dest.glob("*.webp")))
+    print(f"[laboratorio_pos] capturas da plataforma: {n} webp em /img/plataforma/")
+
+
+def _fig(src, rotulo, caption) -> str:
+    return (
+        f'<figure class="shot">{PLAT_MARCA}'
+        f'<span class="rotulo-print">{E(rotulo)}</span>'
+        f'<img src="/img/plataforma/{src}?v={PLAT_V}" alt="{E(rotulo)}. {E(caption)}" '
+        f'width="1440" height="900" loading="lazy" decoding="async" data-lightbox '
+        f'data-caption="{E(rotulo)}">'
+        f'<figcaption>{E(caption)}</figcaption></figure>'
+    )
+
+
+def plataforma_section() -> str:
+    figs = [_fig(n, r, c) for n, r, c in PLAT_SHOTS]
+    return (
+        f'<section class="sec" id="plataforma-planos">{PLAT_MARCA}\n'
+        f'<div class="wrap">\n'
+        f'<div class="sec-head">\n'
+        f'<p class="eyebrow">A plataforma</p>\n'
+        f'<h2>Profissional e Ultra, como aparecem de verdade</h2>\n'
+        f'<p class="lead">Capturas de 23/11/2026 em sessões sintéticas (nenhum processo real). Clique para ampliar. O Kit da inicial com o agente Têmis entra no Têmis Max e no Têmis Ultra; no Profissional ele aparece travado, com convite para subir de degrau.</p>\n'
+        f'<p class="selo-ficcao">Sessão sintética · rótulo de plano em cada captura</p>\n'
+        f'</div>\n<div class="plat-shots">\n{"".join(figs)}\n</div>\n</div></section>\n'
+    )
+
+
+def _inject_plat_css(s: str) -> str:
+    if "laboratorio_pos plataforma t1957u" in s:
+        return s
+    css = "<style>" + PLAT_CSS + "</style>"
+    if "</head>" in s:
+        return s.replace("</head>", css + "</head>", 1)
+    return s
+
+
+def patch_plataforma_shots() -> None:
+    unpack_plataforma_shots()
+    lab = OUT / "laboratorio" / "index.html"
+    if lab.is_file():
+        s = lab.read_text(encoding="utf-8")
+        if PLAT_MARCA not in s:
+            bloco = plataforma_section()
+            if 'id="pecas"' in s:
+                s = s.replace('<section class="sec" id="pecas">', bloco + '\n<section class="sec" id="pecas">', 1)
+            elif "</main>" in s:
+                s = s.replace("</main>", bloco + "</main>", 1)
+            s = _inject_plat_css(s)
+            lab.write_text(s, encoding="utf-8")
+            print("[laboratorio_pos] laboratório: bloco da plataforma por plano")
+    patch_home_plataforma()
+
+
+def patch_home_plataforma() -> None:
+    p = OUT / "index.html"
+    if not p.exists():
+        return
+    s = p.read_text(encoding="utf-8")
+    if "plat-shots-t1957u" in s:
+        return
+    s = _inject_plat_css(s)
+    hero_img = (
+        f'<figure class="hero-shot">{PLAT_MARCA}'
+        f'<span class="rotulo-print">Plano Profissional · painel · sessão sintética 23/11/2026</span>'
+        f'<img src="/img/plataforma/profissional_painel_desktop.webp?v={PLAT_V}" width="1440" height="900" '
+        f'alt="Painel da Têmis no plano Profissional, sessão sintética de 23/11/2026. O Kit da inicial com o agente aparece como convite para o Max e o Ultra." '
+        f'decoding="async" fetchpriority="high" data-lightbox data-caption="Plano Profissional · painel">'
+        f'</figure>'
+    )
+    s2, nhero = re.subn(
+        r'<figure class="hero-shot">.*?</figure>',
+        hero_img,
+        s,
+        count=1,
+        flags=re.S,
+    )
+    if nhero:
+        s = s2
+    figs_home = "".join([
+        _fig("profissional_painel_desktop.webp", "Plano Profissional · painel",
+             "No Profissional, o Kit da inicial com o agente e o Pedir à Têmis aparecem como convite para o Max e o Ultra. Conversa rápida e Gerar minuta seguem disponíveis."),
+        _fig("profissional_caso_desktop.webp", "Plano Profissional · caso",
+             "Caso sintético com documentos e minutas do teste, no plano Profissional, em 23/11/2026."),
+        _fig("ultra_painel_desktop.webp", "Plano Ultra · painel",
+             "No Ultra entram o Kit da inicial (agente), Pedir à Têmis e o Conselho das 4."),
+        _fig("ultra_kit_desktop.webp", "Plano Ultra · Kit da inicial (agente)",
+             "O kit no Ultra, sessão sintética de 23/11/2026, ainda sem o agente ter rodado. O Conselho das 4 neste caso é opt-in."),
+    ])
+    demo = (
+        f'<section class="sec" id="demonstracao">{PLAT_MARCA}<div class="wrap">\n'
+        f'<div class="sec-head">\n'
+        f'<p class="eyebrow">Demonstração</p>\n'
+        f'<h2>Veja a plataforma, não só a promessa</h2>\n'
+        f'<p class="lead">Capturas de 23/11/2026 em sessões sintéticas nos planos Profissional e Ultra. Clique para ampliar. Não é um processo real e não está aberto um acesso público à plataforma.</p>\n'
+        f'<p class="selo-ficcao">Sessão sintética · rótulo de plano em cada captura</p>\n'
+        f'</div>\n<div class="plat-shots">\n{figs_home}\n</div>\n'
+        f'<p><a class="more" href="/laboratorio/#plataforma-planos">Ver também as Facetas da Têmis, a minuta e o laudos.pdf no laboratório ›</a></p>\n'
+        f'</div></section>'
+    )
+    s3, nd = re.subn(
+        r'<section class="sec" id="demonstracao">.*?</section>',
+        demo,
+        s,
+        count=1,
+        flags=re.S,
+    )
+    if nd:
+        s = s3
+    else:
+        print("[laboratorio_pos] aviso: #demonstracao não encontrado na home")
+    if nhero == 0:
+        print("[laboratorio_pos] aviso: hero-shot não encontrado na home")
+    p.write_text(s, encoding="utf-8")
+    print(f"[laboratorio_pos] home: hero={nhero} demonstracao={nd}")
+
+
 def main() -> None:
     if not OUT.exists():
         sys.exit(f"saída inexistente: {OUT}")
     unpack_docs()
     rewrite_lab()
     patch_home_shots()
-    print("[laboratorio_pos] ok: laboratório interativo, peças reais, capturas enganosas fora")
+    patch_plataforma_shots()
+    print("[laboratorio_pos] ok: laboratório interativo, peças reais, capturas honestas por plano")
 
 
 if __name__ == "__main__":
