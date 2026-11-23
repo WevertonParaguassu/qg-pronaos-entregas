@@ -11,4 +11,6 @@ python3 temis-site/seo_pos.py out
 python3 temis-site/confianca_pos.py out
 # Estátua que vira marca d'água, selo-balança, CTAs de aquisição (t1940u). Rollback: apagar só esta linha.
 python3 temis-site/aquisicao_pos.py out
+# Privacidade honesta com o Conselho das 4 (Ultra, opt-in, pergunta anonimizada) — t1942u/t1944u. Rollback: apagar só esta linha.
+python3 temis-site/privacidade_pos.py out
 test -f out/index.html && echo "[temis-site] ok: $(find out -type f | wc -l) arquivos"
