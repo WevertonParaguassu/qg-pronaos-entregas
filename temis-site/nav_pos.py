@@ -238,6 +238,24 @@ if am.exists():
     s = s.replace("Uma amostra por pessoa, sem cartão e sem compromisso.", "Um teste grátis por CPF ou CNPJ, sem cartão e sem compromisso.")
     am.write_text(s)
 
+# 7b) selo com o ROSTO da Têmis (close na face da estátua, anel dourado, nítido em 2x) em todas as páginas + favicons (t1921u)
+import base64 as _b64, io as _io, tarfile as _tar
+_rz = pathlib.Path(__file__).with_name("rosto.tgz.b64")
+if _rz.exists():
+    with _tar.open(fileobj=_io.BytesIO(_b64.b64decode(_rz.read_text())), mode="r:gz") as tf:
+        for m in tf.getmembers():
+            dst = OUT / ("img/" + m.name if m.name.startswith("temis-rosto") else m.name)
+            dst.parent.mkdir(parents=True, exist_ok=True); dst.write_bytes(tf.extractfile(m).read())
+    SELO = ('<img class="brand-rosto" src="/img/temis-rosto-96.webp" srcset="/img/temis-rosto-96.webp 2x, /img/temis-rosto-192.webp 4x" '
+            'width="40" height="40" alt="" aria-hidden="true" decoding="async">')
+    for p in OUT.rglob("*.html"):
+        h = p.read_text(); h2 = re.sub(r'(<a class="brand"[^>]*>)<svg viewBox="0 0 64 64".*?</svg>', lambda m: m.group(1) + SELO, h, count=1, flags=re.S)
+        if '<link rel="icon" href="/favicon.svg"' in h2 and 'href="/favicon.ico"' not in h2:
+            h2 = h2.replace('<link rel="icon" href="/favicon.svg"', '<link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" href="/favicon.svg"', 1)
+        if h2 != h: p.write_text(h2)
+    CSS += ".brand img.brand-rosto{width:40px;height:40px;border-radius:50%;display:block;flex:none;box-shadow:0 0 0 1px #d4af5a55}\n"
+stub("teste-gratis", "/conta/cadastro"); stub("teste-gratuito", "/conta/cadastro")
+
 # 8) CSS, sitemap, _redirects
 css = OUT / "assets" / "site.css"
 if "nav_pos.py" not in css.read_text(): css.write_text(css.read_text() + CSS)
