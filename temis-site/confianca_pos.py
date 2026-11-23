@@ -438,7 +438,7 @@ def rewrite_seguranca() -> None:
 <h2>O que a Têmis não faz</h2>
 <p>Não protocola, não assina e não acessa tribunal. Toda peça sai como minuta para revisão do profissional habilitado. Não prometemos resultado. Não vendemos nem compartilhamos documento de cliente para treinar modelo de terceiros. A base compartilhada entre escritórios, quando existe, guarda só contagens anônimas de um vocabulário fechado — sem texto, nome, número, data ou identificador.</p>
 <h2>LGPD e os seus direitos</h2>
-<p>Coleta mínima, finalidade declarada e canal direto: peça acesso, correção ou exclusão pelo e-mail <a href="mailto:contato.pronaos@gmail.com">contato.pronaos@gmail.com</a>. O teste grátis é um por CPF ou CNPJ. Os preços só aparecem depois do login.</p>
+<p>Coleta mínima, finalidade declarada e canal direto: peça acesso, correção ou exclusão pelo e-mail <a href="mailto:temis@e-pronaos.com">temis@e-pronaos.com</a>. O teste grátis é um por CPF ou CNPJ. Os preços só aparecem depois do login.</p>
 </div></section></main>'''
     pagina(
         "seguranca/",
@@ -921,7 +921,7 @@ def add_jsonld_home() -> None:
         "@graph": [
             {"@type": "Organization", "@id": SITE + "/#org", "name": "Têmis",
              "alternateName": ["Têmis OS", "Agente Têmis", "agentetemis"],
-             "url": SITE + "/", "email": "contato.pronaos@gmail.com",
+             "url": SITE + "/", "email": "temis@e-pronaos.com",
              "logo": SITE + "/icon-192.png"},
             {"@type": "WebSite", "@id": SITE + "/#website", "url": SITE + "/",
              "name": "Têmis OS", "inLanguage": "pt-BR",

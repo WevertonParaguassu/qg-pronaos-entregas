@@ -53,7 +53,7 @@ CORPO_SEG = (
  '<p>Não protocola, não assina e não entra em sistema de tribunal. Toda peça é uma minuta para revisão do advogado ou da advogada. Não prometemos resultado.</p>'
  '<h2>Seus direitos (LGPD)</h2>'
  '<p>Coletamos só o necessário e para uma finalidade clara. Para pedir acesso, correção ou exclusão dos seus dados, escreva para '
- '<a href="mailto:contato.pronaos@gmail.com">contato.pronaos@gmail.com</a>.</p>'
+ '<a href="mailto:temis@e-pronaos.com">temis@e-pronaos.com</a>.</p>'
  '</div></section>' + MARCA)
 p = OUT / "seguranca/index.html"
 if p.exists():

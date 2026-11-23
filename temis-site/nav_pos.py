@@ -221,7 +221,7 @@ for p in OUT.rglob("*.html"):
     s = re.sub(r'(Todas|Todos) em preparação, no mesmo catálogo[^.<]*\.', 'Em funcionamento, com teste grátis.', s)
     s = re.sub(r'<span class="pill">Em preparação</span>', '', s)
     for a, b in (("Oferecemos uma amostra gratuita por pessoa, pedida pelo formulário do site.", "Oferecemos um teste grátis por CPF ou CNPJ, liberado na hora ao criar a conta."),
-                 ("Peça em agentetemis.com/amostra/ ou pelo e-mail contato.pronaos@gmail.com.", "Crie a conta em agentetemis.com/conta/cadastro e use na hora."),
+                 ("Peça em agentetemis.com/amostra/ ou pelo e-mail temis@e-pronaos.com.", "Crie a conta em agentetemis.com/conta/cadastro e use na hora."),
                  ("Como pedir uma amostra grátis?", "Como fazer o teste grátis?"),
                  ("Uma amostra gratuita por pessoa", "Um teste grátis por CPF ou CNPJ"), ("Uma amostra por pessoa", "Um teste grátis por CPF ou CNPJ"), ("Uma por pessoa, sem cartão", "Uma por CPF ou CNPJ, sem cartão")):
         s = s.replace(a, b)
