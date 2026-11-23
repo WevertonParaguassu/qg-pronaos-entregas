@@ -250,6 +250,7 @@ if _rz.exists():
             'width="40" height="40" alt="" aria-hidden="true" decoding="async">')
     for p in OUT.rglob("*.html"):
         h = p.read_text(); h2 = re.sub(r'(<a class="brand"[^>]*>)<svg viewBox="0 0 64 64".*?</svg>', lambda m: m.group(1) + SELO, h, count=1, flags=re.S)
+        h2 = re.sub(r'<source type="image/avif"(?: media="[^"]*")? srcset="/img/temis-(?:720|420)\.avif">', "", h2)   # AVIF da estátua sem transparência = caixa preta; o WebP tem alfa
         if '<link rel="icon" href="/favicon.svg"' in h2 and 'href="/favicon.ico"' not in h2:
             h2 = h2.replace('<link rel="icon" href="/favicon.svg"', '<link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" href="/favicon.svg"', 1)
         if h2 != h: p.write_text(h2)
