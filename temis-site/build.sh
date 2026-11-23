@@ -19,4 +19,6 @@ python3 temis-site/privacidade_pos.py out
 python3 temis-site/laboratorio_pos.py out
 # Contato público temis@e-pronaos.com (t1956u). Rollback: apagar só esta linha.
 python3 temis-site/contato_pos.py out
+# Relatar um problema, 404 amigável e sem vazamento interno (t1965u). Rollback: apagar só esta linha.
+python3 temis-site/erros_pos.py out
 test -f out/index.html && echo "[temis-site] ok: $(find out -type f | wc -l) arquivos"
