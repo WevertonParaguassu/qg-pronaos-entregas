@@ -699,20 +699,35 @@ def rewrite_montar_combos_tarefas() -> None:
 {crumbs(("Início","/"),("Combos",None))}
 <p class="eyebrow">Combos prontos</p>
 <h1>Pacotes prontos, <em>quando você não quer montar peça por peça.</em></h1>
-<p class="lead">Além da contratação avulsa de cada aplicação e dos planos, você pode comprar um combo de tarefas. Os valores e o desconto em relação à compra avulsa aparecem depois do login.</p>
+<p class="lead">Além da contratação avulsa de cada aplicação e dos planos, você pode escolher uma bancada pronta de aplicações que já estão à venda, ou um combo de tarefas. Os valores e o desconto em relação à compra avulsa aparecem depois do login.</p>
 </div></div></section>
-<section class="sec"><div class="wrap"><div class="ficha">
+<section class="sec"><div class="wrap">
+<h2>Combos de aplicações</h2>
+<p>Bancadas por especialidade e por tarefa, montadas só com aplicações já disponíveis. O pagamento, depois do login, libera todas as aplicações do combo de uma vez.</p>
+<div class="ficha">
+<div><h2>Bancada Previdenciária</h2><p>Para quem atua em benefícios e BPC. Reúne perícia, cálculos, ingestão, provas, auditoria e a Protetora Leal.</p><p class="fine">Inclui: Pericial, Cálculos Jurídicos, Ingestão Processual, Probatória, Auditoria Jurídica, Protetora Leal. Exemplo: BPC ou revisão de benefício com laudo e conferência de cálculos. O preço e o desconto frente à compra avulsa aparecem depois do login.</p></div>
+<div><h2>BPC com perícia médica</h2><p>Bancada curta para benefício assistencial com laudo: perícia, cálculos, provas e checagem ética da peça.</p><p class="fine">Inclui: Pericial, Cálculos Jurídicos, Probatória, Protetora Leal. Exemplo: inicial de BPC com análise do laudo médico. O preço e o desconto frente à compra avulsa aparecem depois do login.</p></div>
+<div><h2>Bancada Trabalhista</h2><p>Para contestação e rotina trabalhista: o Advogado do Diabo, auditoria, cálculos, diagramação, ingestão e a Protetora Leal.</p><p class="fine">Inclui: Advogado do Diabo, Auditoria Jurídica, Cálculos Jurídicos, Documental & Diagramação, Protetora Leal, Ingestão Processual. Exemplo: contestação trabalhista com conferência de cálculos e revisão adversária. O preço e o desconto frente à compra avulsa aparecem depois do login.</p></div>
+<div><h2>Bancada Família</h2><p>Para processos de família: cartografia humana, órganon, diagramação, auditoria e a Protetora Leal.</p><p class="fine">Inclui: Cartografia Humana Processual, Órganon Jurídico, Protetora Leal, Documental & Diagramação, Auditoria Jurídica. Exemplo: ação de alimentos ou guarda com mapa das pessoas e revisão da peça. O preço e o desconto frente à compra avulsa aparecem depois do login.</p></div>
+<div><h2>Bancada Sucessões</h2><p>Para inventários e partilhas: órganon, cartografia humana, cálculos, diagramação e auditoria.</p><p class="fine">Inclui: Órganon Jurídico, Cartografia Humana Processual, Cálculos Jurídicos, Documental & Diagramação, Auditoria Jurídica. Exemplo: inventário com cálculo de quinhões e peça revisada. O preço e o desconto frente à compra avulsa aparecem depois do login.</p></div>
+<div><h2>Bancada Penal</h2><p>Para defesa e estratégia penal: Ágôn, Advogado do Diabo, estratégia recursal, provas, Protetora Leal e Audaciosa.</p><p class="fine">Inclui: AGÔN, Advogado do Diabo, Estratégia Recursal, Probatória, Protetora Leal, Audaciosa. Exemplo: resposta à acusação com matriz de provas e revisão adversária. O preço e o desconto frente à compra avulsa aparecem depois do login.</p></div>
+<div><h2>Bancada Empresarial</h2><p>Para contencioso e consultoria empresarial: órganon, especialistas, auditoria, diagramação, Reflxa e Protetora Leal.</p><p class="fine">Inclui: Órganon Jurídico, Especialistas Jurídicos, Auditoria Jurídica, Documental & Diagramação, Reflexa, Protetora Leal. Exemplo: contestação societária ou parecer com revisão cruzada. O preço e o desconto frente à compra avulsa aparecem depois do login.</p></div>
+<div><h2>Revisão de recurso</h2><p>As aplicações que cooperam na revisão de um recurso: Estratégia Recursal, Cúpula, auditoria, diagramação, Protetora Leal e Advogado do Diabo. Fontes do Direito já entra em todos os planos.</p><p class="fine">Inclui: Estratégia Recursal, Cúpula, Auditoria Jurídica, Documental & Diagramação, Protetora Leal, Advogado do Diabo. Exemplo: revisar apelação ou agravo antes de protocolar. O preço e o desconto frente à compra avulsa aparecem depois do login.</p></div>
+<div><h2>Operação do escritório</h2><p>Cadastro canônico, memória da casa e radar de prazos: Central, Memória do Escritório e Radar Processual.</p><p class="fine">Inclui: Têmis Central, Memória do Escritório, Radar Processual. Exemplo: escritório que quer a base operacional sem assinar o plano inteiro. O preço e o desconto frente à compra avulsa aparecem depois do login.</p></div>
+</div>
+<h2 style="margin-top:2rem">Combos de tarefas</h2>
+<div class="ficha">
 <div><h2>Combo Postulatória</h2><p>Para quem vai ajuizar no mês. Reúne petições iniciais e análises dos autos.</p><p class="fine">Exemplo de uso: iniciais previdenciárias com análise de cada caso. Preço após o login.</p></div>
 <div><h2>Combo Defesa</h2><p>Para quem defende réus. Quando a contestação e a análise de laudo estiverem abertas para contratação, este combo as agrupa.</p><p class="fine">A contestação e a análise de laudo ainda não estão abertas avulsas; o combo acompanha essa disponibilidade.</p></div>
 <div><h2>Combo Recursal</h2><p>Para quem recorre de sentenças. Agrupa recursos e análises dos autos.</p><p class="fine">O recurso ainda não está aberto para contratação avulsa; a análise dos autos sim. Preço do combo após o login, quando disponível.</p></div>
 </div>
 <div class="cta-duo" style="margin-top:1.2rem">
-<a class="btn" href="/conta/entrar?volta=/conta/planos">Entrar para ver os preços</a>
+<a class="btn" href="/conta/entrar?volta=/conta/banca">Entrar para ver os preços</a>
 <a class="btn btn-ghost" href="/montar/">Prefiro montar o conjunto</a>
 </div>
 </div></section></main>'''
     pagina("combos/", "Combos prontos da Têmis · Têmis OS",
-           "Combos prontos da Têmis (postulatória, defesa, recursal). Valores após o login. Também é possível montar o conjunto à la carte.", main)
+           "Combos prontos da Têmis: bancadas de aplicações por especialidade e combos de tarefas. Valores após o login. Também é possível montar o conjunto à la carte.", main)
 
     cards = []
     for t in TAREFAS:
