@@ -473,6 +473,10 @@ def rewrite_privacidade() -> None:
 
 
 def disp(t) -> str:
+    if not isinstance(t, dict):
+        if t:
+            return '<span class="disp">Disponível para contratação avulsa · preço após o login</span>'
+        return '<span class="disp disp-nao">Ainda não disponível para contratação avulsa</span>'
     if eh_incluido(t):
         return '<span class="disp">Incluída em todos os planos · a partir do teste grátis</span>'
     if eh_contratavel(t):
