@@ -373,7 +373,7 @@ def patch_home_shots() -> None:
         p.write_text(s, encoding="utf-8")
 
 
-PLAT_V = "t1957u"
+PLAT_V = "t1958u"
 PLAT_MARCA = "<!--plat-shots-t1957u-->"
 PLAT_SHOTS = [
     ("profissional_painel_desktop.webp", "Plano Profissional · painel",
@@ -542,6 +542,44 @@ def patch_home_plataforma() -> None:
     print(f"[laboratorio_pos] home: hero={nhero} demonstracao={nd}")
 
 
+
+def proxy_temis_endpoints() -> None:
+    """Troca endpoints n8n no window.TEMIS por rotas same-origin em /conta/publico/."""
+    import json, re
+    subs = {
+        "endpointSugestoes": "/conta/publico/sugestoes",
+        "endpoint": "/conta/publico/afiliados",
+        "endpointAmostra": "/conta/publico/amostras",
+    }
+    nfiles = 0
+    for html in OUT.rglob("*.html"):
+        s = html.read_text(encoding="utf-8")
+        orig = s
+        def add(m):
+            raw = m.group(1)
+            try:
+                data = json.loads(raw)
+            except Exception:
+                raw2 = raw
+                for k, v in subs.items():
+                    raw2 = re.sub(r'https://n8n\.e-pronaos\.com/webhook/temis-[a-z]+', v, raw2)
+                return f"<script>window.TEMIS={raw2}</script>"
+            for k, v in subs.items():
+                data[k] = v
+            for k, val in list(data.items()):
+                if isinstance(val, str) and "n8n." in val:
+                    data[k] = ""
+            return "<script>window.TEMIS=" + json.dumps(data, ensure_ascii=False, separators=(",", ":")) + "</script>"
+        s, n = re.subn(r"<script>window.TEMIS=(.*?)</script>", add, s, flags=re.S)
+        if "n8n.e-pronaos.com" in s:
+            s = s.replace("https://n8n.e-pronaos.com/webhook/temis-sugestoes", subs["endpointSugestoes"])
+            s = s.replace("https://n8n.e-pronaos.com/webhook/temis-afiliados", subs["endpoint"])
+            s = s.replace("https://n8n.e-pronaos.com/webhook/temis-amostras", subs["endpointAmostra"])
+        if s != orig:
+            html.write_text(s, encoding="utf-8")
+            nfiles += 1
+    print(f"[laboratorio_pos] TEMIS same-origin: {nfiles} html")
+
 def main() -> None:
     if not OUT.exists():
         sys.exit(f"saída inexistente: {OUT}")
@@ -549,6 +587,7 @@ def main() -> None:
     rewrite_lab()
     patch_home_shots()
     patch_plataforma_shots()
+    proxy_temis_endpoints()
     print("[laboratorio_pos] ok: laboratório interativo, peças reais, capturas honestas por plano")
 
 

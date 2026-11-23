@@ -30,7 +30,7 @@ OUT = Path(sys.argv[1] if len(sys.argv) > 1 else "out")
 SITE = "https://agentetemis.com"
 TODAY = date.today().isoformat()
 E = htmllib.escape
-ENDPOINT = "https://n8n.e-pronaos.com/webhook/temis-sugestoes"
+ENDPOINT = "/conta/publico/sugestoes"
 
 # Páginas de conteúdo que precisam de migalhas (caminho relativo com / final)
 CRUMBS = {
@@ -122,7 +122,7 @@ JS_EXTRA = r"""
       };
       var fallback=function(){
         var body='Sugestão:%0A'+data.sugestao+(data.nome?'%0ANome: '+data.nome:'')+(data.email?'%0AE-mail: '+data.email:'');
-        st.innerHTML='Não conseguimos enviar agora. <a href="mailto:'+ (CFG.contato||'temis@e-pronaos.com') +'?subject='+encodeURIComponent('Sugestão para a Têmis')+'&body='+body+'">Envie por e-mail</a>.';
+        st.innerHTML='Não conseguimos enviar agora. <a href="mailto:'+ (CFG.contato||'contato.pronaos@gmail.com') +'?subject='+encodeURIComponent('Sugestão para a Têmis')+'&body='+body+'">Envie por e-mail</a>.';
         st.classList.add('err'); btn.disabled=false;
       };
       var ep=CFG.endpointSugestoes||'';
@@ -337,8 +337,13 @@ def patch_temis_cfg(html: str) -> str:
                 raw2 = raw2[:-1] + f', "endpointSugestoes": "{ENDPOINT}"}}'
                 return f"<script>window.TEMIS={raw2}</script>"
             return m.group(0)
-        if "endpointSugestoes" not in data:
-            data["endpointSugestoes"] = ENDPOINT
+        data["endpointSugestoes"] = "/conta/publico/sugestoes"
+        data["endpoint"] = "/conta/publico/afiliados"
+        data["endpointAmostra"] = "/conta/publico/amostras"
+        # não vazar o n8n no JSON público
+        for k, v in list(data.items()):
+            if isinstance(v, str) and "n8n." in v:
+                data[k] = {"endpointSugestoes": "/conta/publico/sugestoes", "endpoint": "/conta/publico/afiliados", "endpointAmostra": "/conta/publico/amostras"}.get(k, "")
         return "<script>window.TEMIS=" + json.dumps(data, ensure_ascii=False, separators=(",", ":")) + "</script>"
 
     html, n = re.subn(r"<script>window.TEMIS=(.*?)</script>", add, html, count=1, flags=re.S)
@@ -350,8 +355,10 @@ def patch_temis_cfg(html: str) -> str:
     if "</body>" in html:
         cfg = json.dumps(
             {
-                "contato": "temis@e-pronaos.com",
-                "endpointSugestoes": ENDPOINT,
+                "contato": "contato.pronaos@gmail.com",
+                "endpointSugestoes": "/conta/publico/sugestoes",
+                "endpoint": "/conta/publico/afiliados",
+                "endpointAmostra": "/conta/publico/amostras",
                 "site": SITE,
             },
             ensure_ascii=False,
@@ -382,8 +389,8 @@ def inject_footer(html: str, skip_form: bool = False) -> str:
         "</div>"
     )
     html = html.replace(
-        '<p><a href="mailto:temis@e-pronaos.com">temis@e-pronaos.com</a></p></div>',
-        '<p><a href="mailto:temis@e-pronaos.com">temis@e-pronaos.com</a></p>' + block + "</div>",
+        '<p><a href="mailto:contato.pronaos@gmail.com">contato.pronaos@gmail.com</a></p></div>',
+        '<p><a href="mailto:contato.pronaos@gmail.com">contato.pronaos@gmail.com</a></p>' + block + "</div>",
         1,
     )
     return html
@@ -537,7 +544,7 @@ def main() -> None:
         raise SystemExit(f"out inválido: {OUT}")
 
     sug_body = f"""
-<p>Quer melhorar a Têmis? Escreva aqui. Nome e e-mail são opcionais. A sugestão chega à equipe no e-mail temis@e-pronaos.com.</p>
+<p>Quer melhorar a Têmis? Escreva aqui. Nome e e-mail são opcionais. A sugestão chega à equipe no e-mail contato.pronaos@gmail.com.</p>
 <p class="aviso-lgpd">Não envie documentos de clientes, dados sensíveis de terceiros, senhas ou números de processo sigilosos. Peças geradas pela Têmis continuam sendo rascunhos para revisão do advogado responsável.</p>
 {PAGE_FORM}
 <p><a href="/privacidade/">Como tratamos os dados</a> · <a href="/termos/">Termos de uso</a></p>
@@ -556,7 +563,7 @@ def main() -> None:
 <li>Não pedimos avaliação em troca de desconto, crédito ou vantagem.</li>
 <li>Não publicamos depoimento sem que a pessoa tenha usado a Têmis de verdade.</li>
 </ul>
-<p>Se já é cliente e quer falar da experiência agora, use a página de <a href="/sugestoes/">Sugestões</a> ou o e-mail <a href="mailto:temis@e-pronaos.com">temis@e-pronaos.com</a>.</p>
+<p>Se já é cliente e quer falar da experiência agora, use a página de <a href="/sugestoes/">Sugestões</a> ou o e-mail <a href="mailto:contato.pronaos@gmail.com">contato.pronaos@gmail.com</a>.</p>
 """
     write_static_page(
         "sugestoes/",
