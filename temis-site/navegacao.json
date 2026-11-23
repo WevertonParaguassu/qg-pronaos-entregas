@@ -319,7 +319,7 @@
         "Roteamento entre capacidades",
         "Revisão jurídica multi-capacidade"
       ],
-      "plano_minimo": "Têmis Ultra",
+      "plano_minimo": "Escritório",
       "mcp": "temis-legal-hub-mcp",
       "contratavel": true,
       "superficie": "agente"
@@ -334,7 +334,7 @@
       "recebe": [
         "Encaminhamento por especialidade"
       ],
-      "plano_minimo": "Têmis Ultra",
+      "plano_minimo": "Escritório",
       "mcp": "temis-especialistas-juridicos",
       "contratavel": true,
       "superficie": "agente"
@@ -349,7 +349,7 @@
       "recebe": [
         "Notas de análise interdisciplinar"
       ],
-      "plano_minimo": "Têmis Ultra",
+      "plano_minimo": "Têmis Max",
       "mcp": "nous-mcp",
       "contratavel": true,
       "superficie": "agente"
@@ -365,7 +365,7 @@
         "Pontos do laudo",
         "Sugestão de quesitos"
       ],
-      "plano_minimo": "Têmis Ultra",
+      "plano_minimo": "Profissional",
       "mcp": "temis-pericial",
       "contratavel": true,
       "superficie": "agente"
@@ -393,7 +393,7 @@
       "recebe": [
         "Notas de leitura constitucional"
       ],
-      "plano_minimo": "Têmis Ultra",
+      "plano_minimo": "Têmis Max",
       "mcp": "temis-politeia-mcp",
       "contratavel": true,
       "superficie": "agente"
@@ -408,7 +408,7 @@
       "recebe": [
         "Recorte para tribunais superiores"
       ],
-      "plano_minimo": "Têmis Ultra",
+      "plano_minimo": "Têmis Max",
       "mcp": "temis-cupula",
       "contratavel": true,
       "superficie": "agente"
@@ -424,7 +424,7 @@
         "Registro de desfecho",
         "Aprendizado do escritório"
       ],
-      "plano_minimo": "Têmis Ultra",
+      "plano_minimo": "Têmis Max",
       "mcp": "temis-outcome-loop",
       "contratavel": true,
       "superficie": "agente"
@@ -440,7 +440,7 @@
         "Mapa de cobertura dos autos",
         "Proveniência dos arquivos"
       ],
-      "plano_minimo": "Têmis Ultra",
+      "plano_minimo": "Profissional",
       "mcp": "temis-ingestao-processual",
       "contratavel": true,
       "superficie": "agente"
@@ -455,7 +455,7 @@
       "recebe": [
         "Memória de cálculo com premissas"
       ],
-      "plano_minimo": "Têmis Ultra",
+      "plano_minimo": "Profissional",
       "mcp": "temis-calculos-juridicos",
       "contratavel": true,
       "superficie": "agente"
