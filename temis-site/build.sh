@@ -21,4 +21,6 @@ python3 temis-site/laboratorio_pos.py out
 python3 temis-site/contato_pos.py out
 # Relatar um problema, 404 amigável e sem vazamento interno (t1965u). Rollback: apagar só esta linha.
 python3 temis-site/erros_pos.py out
+# Cartões em vidro: a estátua aparece em marca d'água por baixo (t1977u). Rollback: apagar só esta linha.
+python3 temis-site/marca_dagua_pos.py out
 test -f out/index.html && echo "[temis-site] ok: $(find out -type f | wc -l) arquivos"
