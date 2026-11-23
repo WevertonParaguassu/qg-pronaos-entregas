@@ -14,18 +14,18 @@ HERE = Path(__file__).resolve().parent
 BADGE = HERE / "badge"
 SITE = "https://agentetemis.com"
 
-ASSET_V = "t1951u"
+ASSET_V = "t1955u"
 
 STATUE = (
     '<div id="temis-estatua">'
     '<a class="statue-acquire" href="/planos/#agente" title="Conheça o agente Têmis (Max e Ultra). Os preços aparecem depois do login.">'
     '<span class="figura-wm" aria-hidden="true"><picture>'
-    '<source media="(min-width:901px)" srcset="/img/temis-720.webp?v=t1951u">'
-    '<img src="/img/temis-420.webp?v=t1951u" width="420" height="804" alt="" decoding="async" aria-hidden="true">'
+    '<source media="(min-width:901px)" srcset="/img/temis-720.webp?v=t1955u">'
+    '<img src="/img/temis-420.webp?v=t1955u" width="420" height="804" alt="" decoding="async" aria-hidden="true">'
     '</picture></span>'
     '<span class="figura"><picture>'
-    '<source media="(min-width:901px)" srcset="/img/temis-720.webp?v=t1951u">'
-    '<img src="/img/temis-420.webp?v=t1951u" width="420" height="804" '
+    '<source media="(min-width:901px)" srcset="/img/temis-720.webp?v=t1955u">'
+    '<img src="/img/temis-420.webp?v=t1955u" width="420" height="804" '
     'alt="Estátua dourada de Têmis, deusa da justiça, com os olhos vendados, a espada e a balança. Toque para conhecer o agente Têmis." '
     'decoding="async">'
     '</picture></span>'
@@ -39,7 +39,7 @@ SELO = (
 )
 
 CSS = """
-/* aquisicao_pos t1951u: estátua fixa fora do fluxo, selo-balança, CTAs, lightbox */
+/* aquisicao_pos t1955u: estátua fixa fora do fluxo, selo-balança, CTAs, lightbox */
 #temis-estatua{position:fixed;z-index:0;right:0;bottom:0;top:auto;left:auto;width:min(42vw,28rem);height:min(92vh,58rem);margin:0;padding:0;pointer-events:none}
 #temis-estatua a.statue-acquire{display:block;position:relative;width:100%;height:100%;color:inherit;text-decoration:none;pointer-events:auto}
 #temis-estatua .figura,#temis-estatua .figura-wm{position:absolute;inset:0;display:block}
@@ -48,19 +48,30 @@ CSS = """
 #temis-estatua .figura-wm{z-index:0;opacity:.28;mix-blend-mode:soft-light;pointer-events:none}
 .statue-acquire:focus-visible{outline:2px solid #E0C078;outline-offset:4px}
 @media(max-width:900px){
-  #temis-estatua{width:min(46vw,11.5rem);height:min(52vh,22rem);bottom:4.8rem}
+  /* um pouco mais acima, marca d'água atrás do texto; não reserva coluna */
+  #temis-estatua{width:min(62vw,16rem);height:min(62vh,28rem);bottom:8.2rem;right:-0.4rem}
+  #temis-estatua .figura{opacity:.36;filter:drop-shadow(0 16px 32px rgba(0,0,0,.3))}
+  #temis-estatua .figura-wm{opacity:.22}
 }
 @media(prefers-reduced-motion:reduce){
   #temis-estatua .figura{opacity:.55;clip-path:none!important;-webkit-clip-path:none!important}
   #temis-estatua .figura-wm{opacity:.2}
 }
 /* o texto do hero nunca é empurrado pela estátua (ela está fora do fluxo) */
-.hero-os .hero-in{align-items:start!important;grid-template-columns:1fr!important}
+.hero-os .hero-in,.hero-page .hero-in,.hero .hero-in{align-items:start!important;grid-template-columns:1fr!important}
+.hero .hero-copy,.hero-page .hero-copy,.hero-os .hero-copy{position:relative;z-index:3}
 @media(min-width:901px){
-  .hero-os .hero-copy{max-width:calc(100% - min(42vw,28rem) - 1.25rem);position:relative;z-index:2}
+  .hero .hero-copy,.hero-page .hero-copy,.hero-os .hero-copy{max-width:calc(100% - min(42vw,28rem) - 1.25rem)}
 }
 @media(max-width:900px){
-  .hero-os .hero-copy{position:relative;z-index:2;max-width:calc(100% - min(46vw,11.5rem) - .7rem)}
+  /* texto em largura total, mesma tipografia das outras páginas; estátua por baixo */
+  .hero .hero-copy,.hero-page .hero-copy,.hero-os .hero-copy{max-width:none}
+  .hero .hero-copy h1,.hero-os .hero-copy h1,.hero-page .hero-copy h1,
+  .hero .hero-copy .lead,.hero-os .hero-copy .lead,
+  .hero .hero-copy p{text-shadow:0 1px 10px #0B1A33,0 0 18px #06101F}
+  .hero .cta-duo,.hero .selo-ficcao,.cta-duo{position:relative;z-index:3}
+  .hero a.btn,.hero a.btn-ghost,.cta-duo a.btn,.cta-duo a.btn-ghost{position:relative;z-index:4;isolation:isolate}
+  a.btn-ghost,.btn-ghost{background-color:#0B1A33}
 }
 .brand img.brand-rosto{width:40px;height:40px;border-radius:50%;display:block;flex:none;box-shadow:0 0 0 1px #E0C078aa,0 0 0 3px #0B1A33}
 .cta-sticky{display:none}
@@ -117,7 +128,7 @@ JS_STICKY = """
     if(reduced){ fig.style.clipPath=''; fig.style.webkitClipPath=''; fig.style.opacity='0.55'; return; }
     var st=fig.getBoundingClientRect();
     if(st.width<2||st.height<2) return;
-    var holes=[], nodes=document.querySelectorAll('header.top, footer, .cta-sticky, main .card, main article, main .mini, main .shot, main .apps-grid > *, main .grid > a, main .ficha, main .cta-nudge, main .lab, main table, main .bande, main .doc-paper, main .minuta-box, main .alerta-box, main .check-lab, main .docs-lista');
+    var holes=[], nodes=document.querySelectorAll('header.top, footer, .cta-sticky, .hero .cta-duo, .hero a.btn, .hero a.btn-ghost, .cta-duo, main a.btn, main a.btn-ghost, main .card, main article, main .mini, main .shot, main .apps-grid > *, main .grid > a, main .ficha, main .cta-nudge, main .lab, main table, main .bande, main .doc-paper, main .minuta-box, main .alerta-box, main .check-lab, main .docs-lista');
     for(var i=0;i<nodes.length;i++){
       var r=nodes[i].getBoundingClientRect();
       var h=inter(st,r);
@@ -133,6 +144,8 @@ JS_STICKY = """
     });
     var val='polygon('+p.join(',')+')';
     fig.style.clipPath=val; fig.style.webkitClipPath=val;
+    var ac=root.querySelector('a.statue-acquire');
+    if(ac){ ac.style.clipPath=val; ac.style.webkitClipPath=val; }
   }
   var to=false;
   function ask(){ if(to) return; to=true; requestAnimationFrame(function(){ tick(); to=false; }); }
@@ -273,10 +286,10 @@ def replace_badge() -> None:
                 '<link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" href="/favicon.svg"',
                 1,
             )
-        h2 = h2.replace('href="/favicon.svg"', 'href="/favicon.svg?v=t1951u"')
-        h2 = h2.replace('href="/favicon.ico"', 'href="/favicon.ico?v=t1951u"')
-        h2 = h2.replace('href="/favicon-32.png"', 'href="/favicon-32.png?v=t1951u"')
-        h2 = h2.replace('href="/apple-touch-icon.png"', 'href="/apple-touch-icon.png?v=t1951u"')
+        h2 = h2.replace('href="/favicon.svg"', 'href="/favicon.svg?v=t1955u"')
+        h2 = h2.replace('href="/favicon.ico"', 'href="/favicon.ico?v=t1955u"')
+        h2 = h2.replace('href="/favicon-32.png"', 'href="/favicon-32.png?v=t1955u"')
+        h2 = h2.replace('href="/apple-touch-icon.png"', 'href="/apple-touch-icon.png?v=t1955u"')
         if h2 != h:
             p.write_text(h2)
 
