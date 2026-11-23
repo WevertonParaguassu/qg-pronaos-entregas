@@ -17,4 +17,6 @@ python3 temis-site/aquisicao_pos.py out
 python3 temis-site/privacidade_pos.py out
 # Laboratório interativo (checklist com âncoras, minuta completa, [DOC n], laudos.pdf) e prints honestos (t1950u/t1951u). Rollback: apagar só esta linha.
 python3 temis-site/laboratorio_pos.py out
+# Contato público temis@e-pronaos.com (t1956u). Rollback: apagar só esta linha.
+python3 temis-site/contato_pos.py out
 test -f out/index.html && echo "[temis-site] ok: $(find out -type f | wc -l) arquivos"
