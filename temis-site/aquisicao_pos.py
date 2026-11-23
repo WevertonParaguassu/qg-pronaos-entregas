@@ -14,15 +14,22 @@ HERE = Path(__file__).resolve().parent
 BADGE = HERE / "badge"
 SITE = "https://agentetemis.com"
 
+ASSET_V = "t1951u"
+
 STATUE = (
-    '<div class="statue-slot">'
+    '<div id="temis-estatua">'
     '<a class="statue-acquire" href="/planos/#agente" title="Conheça o agente Têmis (Max e Ultra). Os preços aparecem depois do login.">'
-    '<div class="statue-live"><picture>'
-    '<source media="(min-width:901px)" srcset="/img/temis-720.webp">'
-    '<img src="/img/temis-420.webp" width="420" height="804" '
+    '<span class="figura-wm" aria-hidden="true"><picture>'
+    '<source media="(min-width:901px)" srcset="/img/temis-720.webp?v=t1951u">'
+    '<img src="/img/temis-420.webp?v=t1951u" width="420" height="804" alt="" decoding="async" aria-hidden="true">'
+    '</picture></span>'
+    '<span class="figura"><picture>'
+    '<source media="(min-width:901px)" srcset="/img/temis-720.webp?v=t1951u">'
+    '<img src="/img/temis-420.webp?v=t1951u" width="420" height="804" '
     'alt="Estátua dourada de Têmis, deusa da justiça, com os olhos vendados, a espada e a balança. Toque para conhecer o agente Têmis." '
-    'decoding="async" fetchpriority="high">'
-    '</picture></div></a></div>'
+    'decoding="async">'
+    '</picture></span>'
+    '</a></div>'
 )
 
 SELO = (
@@ -32,11 +39,29 @@ SELO = (
 )
 
 CSS = """
-/* aquisicao_pos t1940u: estátua clicável, selo-balança, CTAs */
-a.statue-acquire{display:block;width:100%;height:100%;color:inherit;text-decoration:none}
-.statue-slot,.statue-slot a.statue-acquire{pointer-events:auto}
-.statue-live{pointer-events:auto}
+/* aquisicao_pos t1951u: estátua fixa fora do fluxo, selo-balança, CTAs, lightbox */
+#temis-estatua{position:fixed;z-index:0;right:0;bottom:0;top:auto;left:auto;width:min(42vw,28rem);height:min(92vh,58rem);margin:0;padding:0;pointer-events:none}
+#temis-estatua a.statue-acquire{display:block;position:relative;width:100%;height:100%;color:inherit;text-decoration:none;pointer-events:auto}
+#temis-estatua .figura,#temis-estatua .figura-wm{position:absolute;inset:0;display:block}
+#temis-estatua img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:bottom right;display:block;border:0}
+#temis-estatua .figura{z-index:1;filter:drop-shadow(0 30px 60px rgba(0,0,0,.45))}
+#temis-estatua .figura-wm{z-index:0;opacity:.28;mix-blend-mode:soft-light;pointer-events:none}
 .statue-acquire:focus-visible{outline:2px solid #E0C078;outline-offset:4px}
+@media(max-width:900px){
+  #temis-estatua{width:min(46vw,11.5rem);height:min(52vh,22rem);bottom:4.8rem}
+}
+@media(prefers-reduced-motion:reduce){
+  #temis-estatua .figura{opacity:.55;clip-path:none!important;-webkit-clip-path:none!important}
+  #temis-estatua .figura-wm{opacity:.2}
+}
+/* o texto do hero nunca é empurrado pela estátua (ela está fora do fluxo) */
+.hero-os .hero-in{align-items:start!important;grid-template-columns:1fr!important}
+@media(min-width:901px){
+  .hero-os .hero-copy{max-width:calc(100% - min(42vw,28rem) - 1.25rem);position:relative;z-index:2}
+}
+@media(max-width:900px){
+  .hero-os .hero-copy{position:relative;z-index:2;max-width:calc(100% - min(46vw,11.5rem) - .7rem)}
+}
 .brand img.brand-rosto{width:40px;height:40px;border-radius:50%;display:block;flex:none;box-shadow:0 0 0 1px #E0C078aa,0 0 0 3px #0B1A33}
 .cta-sticky{display:none}
 @media(max-width:900px){
@@ -51,28 +76,103 @@ a.statue-acquire{display:block;width:100%;height:100%;color:inherit;text-decorat
 .cta-nudge{margin-top:1.1rem}
 .cta-nudge p{margin:.3rem 0 0;color:var(--gold-s,#E0C078);font-size:.92rem}
 a.mini.link-card .cta-app, article.mini .cta-app{display:inline-block;margin-top:.7rem;color:#E0C078;font:600 .86rem/1.3 var(--sans,inherit)}
-.hero-os .hero-in{align-items:end}
-@media(min-width:901px){
-  .hero-os .hero-in{grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr)}
-  .hero-os .statue-slot{width:min(100%,440px);margin:0 0 0 auto}
-}
+/* lightbox das capturas de produto */
+#temis-lupa{display:none;position:fixed;inset:0;z-index:90;background:rgba(6,13,27,.92);align-items:center;justify-content:center;padding:1rem}
+#temis-lupa.is-on{display:flex}
+#temis-lupa img{max-width:100%;max-height:calc(100vh - 5rem);object-fit:contain;border:1px solid rgba(224,192,120,.45);border-radius:8px;background:#0B1A33}
+#temis-lupa p{position:absolute;left:1rem;right:4rem;bottom:.7rem;margin:0;color:#E0C078;font:500 .85rem/1.35 var(--sans,inherit)}
+#temis-lupa button{position:absolute;top:.7rem;right:.7rem;background:transparent;border:1px solid #E0C078;color:#E0C078;border-radius:999px;width:2.2rem;height:2.2rem;font-size:1.2rem;cursor:pointer}
+.shot, figure.shot, a[data-lightbox], img[data-lightbox]{cursor:zoom-in}
 """
+
 
 JS_STICKY = """
 (function(){
   var bar=document.querySelector('.cta-sticky');
-  if(!bar) return;
-  var hero=document.querySelector('.hero');
-  function tick(){
-    var on=false;
-    if(hero){var r=hero.getBoundingClientRect(); on=r.bottom>80}
-    document.body.classList.toggle('hero-visible', on);
+  if(bar){
+    var hero=document.querySelector('.hero');
+    function tick(){
+      var on=false;
+      if(hero){var r=hero.getBoundingClientRect(); on=r.bottom>80}
+      document.body.classList.toggle('hero-visible', on);
+    }
+    tick();
+    window.addEventListener('scroll', tick, {passive:true});
+    window.addEventListener('resize', tick, {passive:true});
   }
-  tick();
-  window.addEventListener('scroll', tick, {passive:true});
-  window.addEventListener('resize', tick, {passive:true});
+})();
+(function(){
+  var root=document.getElementById('temis-estatua');
+  if(!root) return;
+  var fig=root.querySelector('.figura');
+  if(!fig) return;
+  var reduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function inter(a,b){
+    var x=Math.max(a.left,b.left), y=Math.max(a.top,b.top);
+    var r=Math.min(a.right,b.right), bot=Math.min(a.bottom,b.bottom);
+    if(r-x<4||bot-y<4) return null;
+    return {x:x,y:y,w:r-x,h:bot-y};
+  }
+  function tick(){
+    if(reduced){ fig.style.clipPath=''; fig.style.webkitClipPath=''; fig.style.opacity='0.55'; return; }
+    var st=fig.getBoundingClientRect();
+    if(st.width<2||st.height<2) return;
+    var holes=[], nodes=document.querySelectorAll('header.top, footer, .cta-sticky, main .card, main article, main .mini, main .shot, main .apps-grid > *, main .grid > a, main .ficha, main .cta-nudge, main .lab, main table, main .bande, main .doc-paper, main .minuta-box, main .alerta-box, main .check-lab, main .docs-lista');
+    for(var i=0;i<nodes.length;i++){
+      var r=nodes[i].getBoundingClientRect();
+      var h=inter(st,r);
+      if(h) holes.push(h);
+    }
+    var p=['evenodd','0% 0%','100% 0%','100% 100%','0% 100%','0% 0%'];
+    holes.forEach(function(h){
+      var x1=((h.x-st.left)/st.width*100).toFixed(2);
+      var y1=((h.y-st.top)/st.height*100).toFixed(2);
+      var x2=(((h.x+h.w)-st.left)/st.width*100).toFixed(2);
+      var y2=(((h.y+h.h)-st.top)/st.height*100).toFixed(2);
+      p.push(x1+'% '+y1+'%', x2+'% '+y1+'%', x2+'% '+y2+'%', x1+'% '+y2+'%', x1+'% '+y1+'%');
+    });
+    var val='polygon('+p.join(',')+')';
+    fig.style.clipPath=val; fig.style.webkitClipPath=val;
+  }
+  var to=false;
+  function ask(){ if(to) return; to=true; requestAnimationFrame(function(){ tick(); to=false; }); }
+  if(document.readyState==='complete') tick(); else window.addEventListener('load', tick);
+  window.addEventListener('scroll', ask, {passive:true});
+  window.addEventListener('resize', ask, {passive:true});
+})();
+(function(){
+  var box=document.getElementById('temis-lupa');
+  if(!box){
+    box=document.createElement('div');
+    box.id='temis-lupa';
+    box.setAttribute('role','dialog');
+    box.setAttribute('aria-modal','true');
+    box.innerHTML='<button type="button" aria-label="Fechar">×</button><img alt=""><p></p>';
+    document.body.appendChild(box);
+  }
+  var img=box.querySelector('img'), cap=box.querySelector('p'), btn=box.querySelector('button');
+  function close(){ box.classList.remove('is-on'); img.removeAttribute('src'); }
+  function open(src, text){
+    img.src=src; img.alt=text||''; cap.textContent=text||'';
+    box.classList.add('is-on'); btn.focus();
+  }
+  document.addEventListener('click', function(ev){
+    var t=ev.target.closest('img[data-lightbox], a[data-lightbox], .shot img, figure.shot img');
+    if(!t) return;
+    if(t.closest('#temis-estatua')) return;
+    ev.preventDefault();
+    var el=t.tagName==='A'?t:t.closest('a[data-lightbox]')||t;
+    var src=el.getAttribute('href')||el.getAttribute('src')||(el.querySelector&&el.querySelector('img')&&el.querySelector('img').src);
+    if(el.tagName==='IMG') src=el.currentSrc||el.src;
+    var text=el.getAttribute('data-caption')||el.getAttribute('alt')||(el.querySelector&&el.querySelector('figcaption')&&el.querySelector('figcaption').textContent)||'';
+    if(src) open(src, text.trim());
+  });
+  btn.addEventListener('click', close);
+  box.addEventListener('click', function(ev){ if(ev.target===box) close(); });
+  document.addEventListener('keydown', function(ev){ if(ev.key==='Escape'&&box.classList.contains('is-on')) close(); });
 })();
 """
+
 
 STICKY = (
     '<div class="cta-sticky" role="navigation" aria-label="Começar">'
@@ -83,7 +183,7 @@ STICKY = (
 
 
 def inject_css(head: str) -> str:
-    if "aquisicao_pos t1940u" in head:
+    if "aquisicao_pos t1951u" in head:
         return head
     if "</style>" in head:
         return head.replace("</style>", CSS + "</style>", 1)
@@ -115,26 +215,45 @@ def copy_badge() -> None:
             dst.write_bytes(src.read_bytes())
 
 
+def _strip_inflow_slots(h: str) -> str:
+    """Remove estátua no fluxo (hero grid) para ela não empurrar o texto."""
+    while True:
+        i = h.find('<div class="statue-slot"')
+        if i < 0:
+            j = h.find('class="statue-slot"')
+            if j < 0:
+                break
+            i = h.rfind("<", 0, j)
+        # balanced div
+        pos, depth = i, 0
+        k = i
+        while k < len(h):
+            if h.startswith("<div", k):
+                depth += 1
+                k += 4
+            elif h.startswith("</div>", k):
+                depth -= 1
+                k += 6
+                if depth == 0:
+                    h = h[:pos] + h[k:]
+                    break
+            else:
+                k += 1
+        else:
+            break
+    h = re.sub(r'<figure class="hero-shot">.*?</figure>', "", h, count=1, flags=re.S)
+    return h
+
+
 def restore_statue_home() -> None:
-    p = OUT / "index.html"
-    if not p.exists():
-        return
-    h = p.read_text()
-    if "statue-acquire" in h and "statue-slot" in h:
+    """Estátua fixa à direita em TODAS as páginas, fora do fluxo."""
+    for p in OUT.rglob("*.html"):
+        h = p.read_text()
+        h = _strip_inflow_slots(h)
+        if 'id="temis-estatua"' not in h and "</body>" in h:
+            h = h.replace("</body>", STATUE + "</body>", 1)
         p.write_text(h)
-        return
-    h2, n = re.subn(
-        r'<figure class="hero-shot">.*?</figure>',
-        STATUE,
-        h,
-        count=1,
-        flags=re.S,
-    )
-    if n:
-        h = h2
-    elif "statue-slot" not in h:
-        h = re.sub(r'(</div>\s*</section>)', STATUE + r"\n\1", h, count=1)
-    p.write_text(h)
+
 
 
 def replace_badge() -> None:
@@ -154,6 +273,10 @@ def replace_badge() -> None:
                 '<link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" href="/favicon.svg"',
                 1,
             )
+        h2 = h2.replace('href="/favicon.svg"', 'href="/favicon.svg?v=t1951u"')
+        h2 = h2.replace('href="/favicon.ico"', 'href="/favicon.ico?v=t1951u"')
+        h2 = h2.replace('href="/favicon-32.png"', 'href="/favicon-32.png?v=t1951u"')
+        h2 = h2.replace('href="/apple-touch-icon.png"', 'href="/apple-touch-icon.png?v=t1951u"')
         if h2 != h:
             p.write_text(h2)
 
@@ -259,7 +382,7 @@ def inject_css_all() -> None:
         if "<head" not in s:
             continue
         # inject into first style or head
-        if "aquisicao_pos t1940u" in s:
+        if "aquisicao_pos t1951u" in s:
             continue
         s2, n = re.subn(r"</style>", CSS + "</style>", s, count=1)
         if n == 0:
@@ -278,7 +401,7 @@ def main() -> None:
     sticky_cta()
     inject_css_all()
     n = sum(1 for _ in OUT.rglob("*.html"))
-    print(f"[aquisicao_pos] ok: {n} html; selo-balança; estátua no hero; CTAs")
+    print(f"[aquisicao_pos] ok: {n} html; selo-balança cache-bust; estátua fixa em todas; lightbox; CTAs")
 
 
 if __name__ == "__main__":
