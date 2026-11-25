@@ -39,6 +39,8 @@ python3 temis-site/rampa_glossario_t2217u_pos.py out
 python3 temis-site/polish_t2217u_pos.py out
 # Oferta da semana no 1º mês (78/65/50), contagem até o fim da semana e ?indicacao= (t2220u/t2221u). Rollback: apagar só esta linha.
 python3 temis-site/semanas_t2220u_pos.py out
+# Programa Cobrimos a oferta (t2230u): regulamento em /termos/#cobrimos e resumo em /planos/ (junto ao comparativo). Rollback: apagar só esta linha.
+python3 temis-site/cobrimos_t2230u_pos.py out
 # PWA instalável (t2225u): manifesto, service worker (cascão offline, sem cache de API/documentos), ícones maskable, botão Instalar o app Têmis e dica no iOS. Roda por último, depois das semanas. Rollback: apagar só esta linha.
 python3 temis-site/pwa_t2225u_pos.py out
 test -f out/index.html && echo "[temis-site] ok: $(find out -type f | wc -l) arquivos"
