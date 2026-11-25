@@ -58,6 +58,9 @@ python3 temis-site/chamada_t2248u_pos.py out
 python3 temis-site/vitrine_t2259u_pos.py out
 # Política de cancelamento (t2260u): /politica-de-cancelamento/, links em /planos/, /termos/, /regras-da-promocao/, rodapé e sitemap. Rollback: apagar só esta linha.
 python3 temis-site/cancelamento_t2260u_pos.py out
+# Abatimento do uso na política de cancelamento (t2262u): atualiza /politica-de-cancelamento/ e as notas.
+# Roda depois do t2260u e antes do PWA. Rollback: apagar só estas duas linhas.
+python3 temis-site/cancelamento_t2262u_pos.py out
 # PWA instalável (t2225u): manifesto, service worker (cascão offline, sem cache de API/documentos), ícones maskable, botão Instalar o app Têmis e dica no iOS. Roda por último, depois das semanas. Rollback: apagar só esta linha.
 python3 temis-site/pwa_t2225u_pos.py out
 test -f out/index.html && echo "[temis-site] ok: $(find out -type f | wc -l) arquivos"
