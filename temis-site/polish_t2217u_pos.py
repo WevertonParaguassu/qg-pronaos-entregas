@@ -13,7 +13,7 @@ import re, sys, pathlib, shutil
 OUT = pathlib.Path(sys.argv[1] if len(sys.argv) > 1 else "out")
 HERE = pathlib.Path(__file__).parent
 MARCA = "t2217u-polish"
-LINK = f'<link rel="stylesheet" href="/assets/polish-t2217u.css?v=3" data-m="{MARCA}">'
+LINK = f'<link rel="stylesheet" href="/assets/polish-t2217u.css?v=4" data-m="{MARCA}">'
 
 TROCAS = [
     # preços: planos são públicos; aplicativo avulso e combos, dentro da conta
@@ -141,6 +141,10 @@ def main():
         h = f.read_text(encoding="utf-8"); h0 = h
         for a, b in TROCAS: h = h.replace(a, b)
         if rel == "": h = home(h)
+        # t2222u: título do hero no padrão claro + itálico dourado (como /planos/)
+        h = h.replace("<h1>Seu trabalho jurídico. Uma rede de inteligências especializadas.</h1>", "<h1>Seu trabalho jurídico. <em>Uma rede de inteligências especializadas.</em></h1>")
+        h = h.replace("<h1>Monte o seu conjunto de aplicativos Têmis.</h1>", "<h1>Monte o seu conjunto <em>de aplicativos Têmis.</em></h1>")
+        h = h.replace("<h1>28 aplicações, <em>uma só Têmis.</em></h1>", "<h1>28 aplicativos, <em>uma só Têmis.</em></h1>")
         if rel == "404.html":
             h = re.sub(r'<link rel="canonical" href="[^"]*/404-page/">', '', h)
             h = re.sub(r'<meta property="og:url" content="[^"]*/404-page/">', '', h)

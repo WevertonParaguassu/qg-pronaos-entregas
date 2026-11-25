@@ -57,3 +57,8 @@ details summary{cursor:pointer;color:var(--t-gold-l)}
  h1{font-size:2.1rem}
  main:has(.plano) .grid{grid-template-columns:1fr}
 }
+
+/* t2223u: «Esqueci a senha» dentro do cartão de login */
+.esqueci-linha{display:flex;justify-content:flex-end;margin:2px 0 8px}
+.esqueci-senha{display:inline-flex;align-items:center;min-height:44px;padding:0 4px;color:#d9bc7a;font-weight:600;text-decoration:underline;text-underline-offset:3px}
+.esqueci-senha:hover,.esqueci-senha:focus-visible{color:#f1d77a}
