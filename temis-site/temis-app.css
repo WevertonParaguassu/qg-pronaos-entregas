@@ -1,0 +1,6 @@
+/* t2217u-polish · Estação e painel: as mesmas letras do site (títulos em serifa, corpo InterV). Servida pelo site estático. */
+@font-face{font-family:"Instrument";src:url(/assets/is-Regular.woff2) format("woff2");font-display:swap}
+@font-face{font-family:"Instrument";src:url(/assets/is-Italic.woff2) format("woff2");font-style:italic;font-display:swap}
+@font-face{font-family:"InterV";src:url(/assets/inter.woff2) format("woff2");font-weight:300 700;font-display:swap}
+body{font-family:"InterV",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+.marca b,.ola h1,main h1,.vazio h1{font-family:"Instrument",Georgia,serif;font-weight:400;letter-spacing:-.01em}

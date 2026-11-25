@@ -1,0 +1,58 @@
+/* t2217u-polish · /conta/* e /login com a mesma identidade do site (agentetemis.com). Servida pelo site estático.
+   Se esta folha não carregar, a página segue com o estilo próprio do servidor. Só azul e dourado. */
+@font-face{font-family:"Instrument";src:url(/assets/is-Regular.woff2) format("woff2");font-display:swap}
+@font-face{font-family:"Instrument";src:url(/assets/is-Italic.woff2) format("woff2");font-style:italic;font-display:swap}
+@font-face{font-family:"InterV";src:url(/assets/inter.woff2) format("woff2");font-weight:300 700;font-display:swap}
+:root{--t-serif:"Instrument",Georgia,serif;--t-sans:"InterV",system-ui,-apple-system,"Segoe UI",sans-serif;--t-head:#EDE4CC;--t-ink:#C7CEDD;--t-gold:#BF9B4E;--t-gold-l:#D9BC7A;--t-gold-s:#FFE3A0}
+body{font-family:var(--t-sans);font-weight:400;line-height:1.62;-webkit-font-smoothing:antialiased;background:linear-gradient(180deg,#0A1630 0%,#060D1B 38rem) no-repeat,#060D1B}
+h1,h2,h3,header b,.preco,.preco .rampa-preco{font-family:var(--t-serif);font-weight:400;letter-spacing:-.01em}
+h1{font-size:clamp(2.2rem,1.6rem + 2.4vw,3.2rem);line-height:1.04;color:var(--t-head);margin:10px 0 14px;text-wrap:balance}
+h2{font-size:clamp(1.45rem,1.2rem + 1vw,1.9rem);line-height:1.12;color:var(--t-head);text-wrap:balance}
+h3{font-family:var(--t-serif);font-weight:400;font-size:1.25rem;color:var(--t-head)}
+p,li{text-wrap:pretty}
+b,strong{font-weight:600}
+header{position:sticky;top:0;z-index:40;background:rgba(6,13,27,.82);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid rgba(191,155,78,.22);padding:12px clamp(16px,3vw,32px)}
+header b{font-size:1.6rem;color:var(--t-head)}
+header nav{gap:6px 18px;align-items:center}
+header nav a{color:#C7CEDD;font-size:.92rem;padding:6px 0}
+header nav a:hover{color:var(--t-gold-l)}
+header nav a[aria-current="page"]{color:var(--t-gold-l);text-decoration:underline;text-underline-offset:6px;text-decoration-color:var(--t-gold)}
+header nav a.cta{background:linear-gradient(180deg,#E3C47E,#BF9B4E);color:#060D1B;font-weight:600;border-radius:999px;padding:8px 16px}
+main{padding-top:clamp(24px,4vw,44px)}
+.card{border-color:rgba(191,155,78,.32);border-radius:18px;background:linear-gradient(160deg,rgba(19,44,92,.78),rgba(10,26,56,.82));-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+.btn{min-height:44px;display:inline-flex;align-items:center;justify-content:center;text-align:center;line-height:1.2;font-family:var(--t-sans);font-weight:600;background:linear-gradient(180deg,#E3C47E,#BF9B4E);color:#060D1B}
+.btn.sec{background:transparent;color:var(--t-gold-l);border:1px solid rgba(191,155,78,.6)}
+.btn:hover{filter:brightness(1.06)}.btn.sec:hover{background:rgba(191,155,78,.1)}
+a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--t-gold-s);outline-offset:3px;border-radius:8px}
+input,select,textarea{font-family:var(--t-sans)}
+label{color:#A9B3C8}
+small,.mu{color:#A9B3C8}
+footer{color:#A9B3C8;line-height:1.6;border-top:1px solid rgba(191,155,78,.16);margin-top:24px;padding-top:22px}
+.wm{opacity:.08}
+/* Planos dentro da conta: largura igual à do site, cartões em 3 colunas, etiquetas alinhadas */
+main:has(.plano){max-width:1240px}
+main:has(.plano) .grid{grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px;align-items:start}
+.plano-topo{display:flex;align-items:center;gap:10px}
+.plano h2{margin:10px 0 4px}
+.preco .rampa-preco{font-size:1.75rem;color:var(--t-gold-s);line-height:1.15}
+.preco small.dep{font-family:var(--t-sans)!important;line-height:1.5}
+.botoes-plano{display:grid;gap:8px;margin:14px 0 10px}
+.botoes-plano>.btn{width:100%;margin:0}
+.botoes-plano .alt-pag{display:grid;grid-template-columns:1fr;gap:8px;margin:0!important}
+.botoes-plano .alt-pag .btn{width:100%;margin:0}
+.lista-apps{display:grid;gap:6px}
+.app-temis{flex-wrap:nowrap!important;align-items:flex-start!important;line-height:1.35}
+.app-temis .tag-app{flex:none;margin-top:1px}
+.listas-plano>p>b{font-family:var(--t-sans);font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;color:var(--t-gold-l)}
+details summary{cursor:pointer;color:var(--t-gold-l)}
+.lanc{border-radius:16px}
+/* Monte a sua banca */
+.bk .hero h1{color:var(--t-head)}
+.bk section>h2{font-family:var(--t-serif);font-weight:400;color:var(--t-head)}
+.bk .it h3{font-family:var(--t-serif);font-size:1.2rem}
+@media(max-width:700px){
+ header{flex-wrap:wrap}
+ header nav{width:100%;margin-left:0;gap:4px 14px}
+ h1{font-size:2.1rem}
+ main:has(.plano) .grid{grid-template-columns:1fr}
+}

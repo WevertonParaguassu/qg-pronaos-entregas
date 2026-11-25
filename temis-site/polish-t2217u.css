@@ -1,0 +1,76 @@
+/* t2217u-polish · acabamento final do site da Têmis. Só azul e dourado. Rollback: apagar a linha do polish_t2217u_pos.py no build.sh. */
+/* Tipografia: serifa de títulos com equilíbrio de linhas, corpo um pouco mais encorpado e entrelinha confortável */
+body{font-weight:400;line-height:1.68;font-feature-settings:"kern","liga","calt"}
+h1,h2,h3{text-wrap:balance;font-feature-settings:"kern","liga"}
+p,li,dd{text-wrap:pretty}
+h2{line-height:1.06;margin-bottom:.45em}
+h3{line-height:1.2}
+.lead{font-size:clamp(1.04rem,.98rem + .35vw,1.2rem);line-height:1.72;color:var(--ink);max-width:42rem}
+.fine,.muted{color:var(--ink-2)}
+.eyebrow{letter-spacing:.2em;font-weight:500}
+.sec-head{max-width:46rem;margin-bottom:clamp(1.4rem,3vw,2.2rem)}
+.sec-head .lead{margin-top:.2rem}
+strong,b{font-weight:600;color:var(--head)}
+/* Foco visível e alvo de toque decente */
+a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px solid var(--gold-s);outline-offset:3px;border-radius:8px}
+.btn,.btn-ghost{min-height:44px;display:inline-flex;align-items:center;justify-content:center;text-align:center;line-height:1.2}
+#nav a[aria-current="page"]:not(.btn){color:var(--gold-l);text-decoration:underline;text-decoration-color:var(--gold);text-underline-offset:6px}
+/* Home: herói limpo (sem painel sintético), estátua à direita */
+.hero-os .hero-in{min-height:min(78vh,720px);align-items:center}
+.hero-os .hero-copy{max-width:40rem}
+html .hero.hero-os h1{font-size:clamp(2.6rem,5.2vw,4.6rem);line-height:1.02;max-width:13.5em}
+.apps-grid a:not(:has(svg,img))>*{margin-left:0}
+/* Cartões: ficam acima da estátua (a estátua continua como marca d'água por baixo do vidro) */
+main .tm-card,main .tm-ess,main .tm-lanc-box,main .ficha>div,main .tm-tab-w{position:relative;z-index:3}
+main .tm-card,main .tm-ess{background:rgba(11,28,56,.72);-webkit-backdrop-filter:blur(12px) saturate(1.2);backdrop-filter:blur(12px) saturate(1.2)}
+main .tm-lanc-box{background:rgba(9,22,46,.86)}
+main .tm-tab-w{background:rgba(6,14,30,.9)}
+/* Listas com a etiqueta App Têmis / Skill Têmis: etiqueta fixa à esquerda, nome ao lado, sem quebrar a linha */
+.tm-lista{list-style:none;padding:0;margin:.35rem 0 1rem;display:grid;gap:.38rem}
+.tm-lista li{display:flex;align-items:flex-start;gap:.55rem;margin:0;line-height:1.35;flex-wrap:nowrap}
+.tm-lista .tm-tag{flex:none;margin-top:.12rem}
+.tm-listas>p>b{font-family:var(--sans);font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-l)}
+.tm-listas>p{margin:.9rem 0 .35rem}
+/* Botões dos planos: cartão primeiro; Pix e Mercado Pago lado a lado quando cabe */
+.tm-botoes{display:grid;gap:.6rem;margin:1.1rem 0 .6rem}
+.tm-botoes>.btn{width:100%}
+.tm-alt{display:grid;grid-template-columns:repeat(auto-fit,minmax(205px,1fr));gap:.6rem}
+.tm-alt .btn{width:100%;margin:0;white-space:nowrap;padding-inline:14px;font-size:.93rem}
+.ficha ul.tm-lista{padding-left:0}
+/* Escada: Base e Prática lado a lado; Solo, Profissional e Escritório em 3; Max e Ultra em 2, largos */
+.tm-entrada .tm-ess-topo{align-items:flex-start}
+.ficha{gap:1.1rem}
+@media(min-width:1100px){
+ .ficha{grid-template-columns:repeat(6,minmax(0,1fr))}
+ .ficha>div{grid-column:span 2}
+ .ficha>.tm-max,.ficha>#ultra{grid-column:span 3}
+}
+@media(min-width:700px) and (max-width:1099px){
+ .ficha{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .ficha>#ultra{grid-column:1/-1}
+}
+.ficha h2{font-size:clamp(1.5rem,2.2vw,1.9rem);margin:.35rem 0 .5rem}
+.tm-preco b{font-family:var(--serif);font-weight:400;font-size:1.9rem;color:var(--gold-s);letter-spacing:0}
+.tm-rampa{line-height:1.5}
+/* Comparativo */
+.tm-tab th,.tm-tab td{padding:10px 12px}
+.tm-tab tbody tr:hover td,.tm-tab tbody tr:hover th[scope=row]{background:rgba(191,155,78,.05)}
+/* Compromissos e cartões pequenos: altura natural */
+.minis{align-items:start}
+/* Rodapé: links em duas colunas, compactos; aviso do formulário legível */
+.foot nav{align-content:start;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:1.6rem;row-gap:.6rem}
+.foot-sugestao label.check,.form-sugestao label.check{display:block;position:relative;padding-left:1.75rem;font-size:.86rem;line-height:1.5;color:var(--ink-2)}
+.foot-sugestao label.check input,.form-sugestao label.check input{position:absolute;left:0;top:.18rem;width:1.05rem;height:1.05rem;margin:0}
+.foot-base{gap:1rem;flex-wrap:wrap}
+/* Celular */
+@media(max-width:700px){
+ .hero-os .hero-in{min-height:auto}
+ .tm-alt{grid-template-columns:1fr}
+ .foot nav{grid-template-columns:1fr 1fr}
+ .tm-preco b{font-size:1.6rem}
+ body{padding-bottom:84px}
+ html #temis-estatua .figura-wm{opacity:.2}
+ .hero-os{padding-top:1.4rem}
+ .hero .lead,.hero .fine{text-shadow:0 1px 3px rgba(4,12,28,.95),0 0 18px rgba(6,13,27,.8)}
+}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
