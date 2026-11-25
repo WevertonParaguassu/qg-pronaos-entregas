@@ -53,6 +53,9 @@ python3 temis-site/busca_t2239u_pos.py out
 python3 temis-site/chamada_t2240u_pos.py out
 # Chamada generalista + regras com piso (t2248u): valor exato só no fechamento; rampa só no 1º ano em 2/3 anos. Rollback: apagar só esta linha.
 python3 temis-site/chamada_t2248u_pos.py out
+# Vitrine pública /aplicativos/ (t2259u): aplicativos, skills e ferramentas à la carte. Roda antes do PWA.
+# Rollback: apagar só esta linha e os arquivos vitrine_t2259u_pos.py e alacarte_publicos.json.
+python3 temis-site/vitrine_t2259u_pos.py out
 # PWA instalável (t2225u): manifesto, service worker (cascão offline, sem cache de API/documentos), ícones maskable, botão Instalar o app Têmis e dica no iOS. Roda por último, depois das semanas. Rollback: apagar só esta linha.
 python3 temis-site/pwa_t2225u_pos.py out
 test -f out/index.html && echo "[temis-site] ok: $(find out -type f | wc -l) arquivos"
