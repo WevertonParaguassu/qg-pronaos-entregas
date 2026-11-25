@@ -187,7 +187,7 @@ OFFLINE_HTML = """<!doctype html>
 <meta name="theme-color" content="#060D1B">
 <meta name="robots" content="noindex">
 <title>Sem conexão · Têmis</title>
-<link rel="manifest" href="/manifest.webmanifest">
+<link rel="manifest" href="/manifest.json">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <style>
   :root{--bg:#060D1B;--gold:#BF9B4E;--gold-l:#D9BC7A;--gold-s:#FFE3A0;--ink:#C7CEDD;--head:#EDE4CC}
@@ -314,7 +314,7 @@ PWA_JS = r"""/* t2225u-pwa · registra o service worker, botão Instalar o app T
 """
 
 HEAD = f"""<!-- {MARCA} -->
-<link rel="manifest" href="/manifest.webmanifest">
+<link rel="manifest" href="/manifest.json">
 <meta name="theme-color" content="#060D1B">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
