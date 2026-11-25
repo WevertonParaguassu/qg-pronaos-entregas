@@ -43,6 +43,8 @@ python3 temis-site/semanas_t2220u_pos.py out
 python3 temis-site/cobrimos_t2230u_pos.py out
 # Vídeos da triagem (t2226u): seção «Veja uma triagem real» na home e em /planos/; MP4s auto-hospedados, lazy (preload=none), com cartaz; mesa nas telas largas, celular nas estreitas. Rollback: apagar só esta linha.
 python3 temis-site/triagem_t2226u_pos.py out
+# Robôs de IA fora (t2231u): robots.txt com os robôs de IA, ai.txt e .well-known/tdmrep.json. Rollback: apagar só esta linha.
+python3 temis-site/antirobo_t2231u_pos.py out
 # PWA instalável (t2225u): manifesto, service worker (cascão offline, sem cache de API/documentos), ícones maskable, botão Instalar o app Têmis e dica no iOS. Roda por último, depois das semanas. Rollback: apagar só esta linha.
 python3 temis-site/pwa_t2225u_pos.py out
 test -f out/index.html && echo "[temis-site] ok: $(find out -type f | wc -l) arquivos"
