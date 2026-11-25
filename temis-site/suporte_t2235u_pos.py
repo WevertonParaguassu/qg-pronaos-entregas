@@ -12,7 +12,10 @@ from pathlib import Path
 
 OUT = Path(sys.argv[1] if len(sys.argv) > 1 else "out")
 ROOT = Path(__file__).resolve().parent
-SUP = "suportetemis@e-pronaos.com"
+# Interruptor: enquanto a regra suportetemis@ não existir no Email Routing da Cloudflare, o site mostra temis@ (que já entrega).
+# Para ligar: gravar "sim" em temis-site/suporte_ativo.txt (só depois do e-mail de teste chegar na caixa contato.pronaos).
+_ATIVO = (ROOT / "suporte_ativo.txt").read_text(encoding="utf-8").strip().lower() == "sim" if (ROOT / "suporte_ativo.txt").exists() else False
+SUP = "suportetemis@e-pronaos.com" if _ATIVO else "temis@e-pronaos.com"
 MARCA = "<!--suporte-t2235u-->"
 DADOS = json.loads((ROOT / "precos_publicos.json").read_text(encoding="utf-8"))
 SEM = (DADOS.get("rampa") or {}).get("semanas") or {}
@@ -78,7 +81,7 @@ def main():
             continue
         o = s
         alvo = '<a href="mailto:temis@e-pronaos.com">temis@e-pronaos.com</a>'
-        if '<footer' in s and alvo in s:
+        if _ATIVO and '<footer' in s and alvo in s:
             ini = s.rfind('<footer')
             pos = s.find(alvo, ini)
             if pos > 0:
@@ -87,7 +90,7 @@ def main():
                 feitos["rodape"] += 1
         if f == OUT / "sugestoes" / "index.html":
             fr = "A sugestão chega à equipe no e-mail temis@e-pronaos.com."
-            if fr in s:
+            if _ATIVO and fr in s:
                 s = s.replace(fr, fr + f' Para suporte da sua conta, escreva para <a href="mailto:{SUP}">{SUP}</a>.', 1); feitos["sugestoes"] = True
         if f == OUT / "index.html":
             s = re.sub(r'(<body\b[^>]*>)', lambda m: m.group(1) + faixa(), s, count=1); feitos["home"] = True
@@ -102,7 +105,7 @@ def main():
         if "/suporte/" not in x and "</urlset>" in x:
             x = x.replace("</urlset>", "<url><loc>https://agentetemis.com/suporte/</loc><changefreq>monthly</changefreq><priority>0.5</priority></url></urlset>")
             sm.write_text(x, encoding="utf-8"); feitos["sitemap"] = True
-    print("[suporte_t2235u]", feitos)
+    print("[suporte_t2235u]", SUP, feitos)
 
 if __name__ == "__main__":
     main()
