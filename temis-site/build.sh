@@ -65,6 +65,9 @@ python3 temis-site/cancelamento_t2262u_pos.py out
 python3 temis-site/turmas_t2276u_pos.py out
 # Preço final e percentual na vitrine (t2281u): «de R$ X por R$ Y · −Z%», atualizado por /conta/promo.json. Rollback: apagar só esta linha.
 python3 temis-site/promo_t2281u_pos.py out
+# Blog jurídico e públicos (t2306u): /blog/ (petição com IA, IA para advogados, estudantes) e /para-quem-e/ (estudantes, Defensoria, servidores, peritos, cartórios). CTA para /planos/ com UTM, sem preço da semana cravado. Roda depois do promo e antes do PWA.
+# Rollback: apagar só estas duas linhas (comentário + python3) e o arquivo temis-site/blog_juridico_t2306u_pos.py.
+python3 temis-site/blog_juridico_t2306u_pos.py out
 # PWA instalável (t2225u): manifesto, service worker (cascão offline, sem cache de API/documentos), ícones maskable, botão Instalar o app Têmis e dica no iOS. Roda por último, depois das semanas. Rollback: apagar só esta linha.
 python3 temis-site/pwa_t2225u_pos.py out
 test -f out/index.html && echo "[temis-site] ok: $(find out -type f | wc -l) arquivos"
