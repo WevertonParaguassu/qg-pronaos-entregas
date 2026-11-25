@@ -29,4 +29,10 @@ python3 temis-site/escada_pos.py out
 python3 temis-site/precos_pos.py out
 # Sem «assinatura», «gratuita» ou «grátis» no texto visível do site; chamada «sem custo no teste» (t2198u). Rollback: apagar só esta linha.
 python3 temis-site/palavras_pos.py out
+# Pacotinhos Base e Prática em /planos/, sem alterar precos_pos (t2204u). Rollback: apagar só esta linha.
+python3 temis-site/entrada_t2204u_pos.py out
+# Medalhas e tags da escada (t2201u). Rollback: apagar só esta linha.
+python3 temis-site/medalhas_t2201u_pos.py out
+# Glossário, rampa (−50/40/30/20/10, cheio no 6º mês, inscrição até 31/05/2027 23h59 BRT), escada de 8 degraus e nomes dos botões (t2217u). Rollback: apagar só esta linha.
+python3 temis-site/rampa_glossario_t2217u_pos.py out
 test -f out/index.html && echo "[temis-site] ok: $(find out -type f | wc -l) arquivos"

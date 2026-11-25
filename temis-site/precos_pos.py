@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """t2198u (aprovado pelo Weverton em 24/11/2026, t2200s9327) — /planos/ público: preços já aprovados (tabela de 23/11/2026, sem
-mudar valores), contagem do lançamento até 31/01/2027 23h59 (Brasília), comparativo por recurso (incluindo os novos) e o
+mudar valores), contagem do lançamento até 31/05/2027 23h59 (Brasília), comparativo por recurso (incluindo os novos) e o
 «Têmis Essencial — 7 dias para testar». Dados: temis-site/precos_publicos.json. Rollback: apagar a linha no build.sh."""
 import json, re, sys, html
 from pathlib import Path
