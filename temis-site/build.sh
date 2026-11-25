@@ -49,6 +49,8 @@ python3 temis-site/antirobo_t2231u_pos.py out
 python3 temis-site/suporte_t2235u_pos.py out
 # Busca da marca Têmis/Temis (t2239u): título/OG, JSON-LD com alternateName, linha «também escrito Temis», hreflang pt-BR e sitemap completo. Não mexe no robots.txt. Rollback: apagar só esta linha.
 python3 temis-site/busca_t2239u_pos.py out
+# Chamada da rampa (t2240u): faixa e janela com desconto por semana de adesão (não «1º mês» como título), página /regras-da-promocao/, troca sozinha por semana. Não altera preços nem cupons. Rollback: apagar só esta linha.
+python3 temis-site/chamada_t2240u_pos.py out
 # PWA instalável (t2225u): manifesto, service worker (cascão offline, sem cache de API/documentos), ícones maskable, botão Instalar o app Têmis e dica no iOS. Roda por último, depois das semanas. Rollback: apagar só esta linha.
 python3 temis-site/pwa_t2225u_pos.py out
 test -f out/index.html && echo "[temis-site] ok: $(find out -type f | wc -l) arquivos"
