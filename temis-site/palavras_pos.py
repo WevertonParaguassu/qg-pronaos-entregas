@@ -18,6 +18,8 @@ T = [
     ("amostra gratuita", "teste sem custo"),
     ("Teste grátis", "Sem custo no teste"),
     ("teste grátis", "teste sem custo"),
+    ("Para ver os valores e assinar, entre na sua conta.", "Para contratar, entre na sua conta."),
+    ("sem assinar o plano inteiro", "sem contratar o plano inteiro"),
     ("Os preços de cada aplicação e dos planos aparecem depois do login.", "Os preços dos planos estão na página Planos; os de cada aplicação aparecem depois do login."),
 ]
 GEN = [(re.compile(r"\bgrátis\b"), "sem custo"), (re.compile(r"\bGrátis\b"), "Sem custo"), (re.compile(r"\bgratuita\b"), "sem custo"),
