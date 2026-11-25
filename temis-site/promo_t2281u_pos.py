@@ -72,6 +72,46 @@ def _atualiza_regras(t: str) -> str:
         "o valor exato de cada plano e prazo aparece no fechamento do plano, na área do cliente",
         "o preço final e o percentual aparecem na página de planos, nos cartões e no fechamento",
     )
+    t = t.replace(
+        "O valor exato, em reais, aparece no fechamento do plano — depois de entrar na sua conta e escolher o prazo.",
+        "O preço final e o percentual aparecem na página de planos, nos cartões e no fechamento.",
+    )
+    t = t.replace(
+        "O valor exato aparece no fechamento do plano.",
+        "O preço final e o percentual aparecem na página de planos, nos cartões e no fechamento.",
+    )
+    t = t.replace(
+        "o valor exato aparece no fechamento do plano",
+        "o preço final e o percentual aparecem na página de planos, nos cartões e no fechamento",
+    )
+    return t
+
+
+
+def _marca_tabela_mes(t: str) -> str:
+    """Preenche a linha '1º mês' da tabela comparativa. Só troca o span fechado, sem regex gulosa."""
+    n = 0
+    for cheio, slug in (
+        ("29", "base"),
+        ("49", "pratica"),
+        ("129", "solo"),
+        ("249", "profissional"),
+        ("199", "escritorio"),
+        ("797", "max"),
+        ("1.497", "ultra"),
+    ):
+        alvo = (
+            f'<span class="tm-cel-fechamento"><b>no fechamento</b>'
+            f'<small>valor exato no fechamento do plano · cheio R$ {cheio}</small></span>'
+        )
+        novo = (
+            f'<span class="tm-cel-fechamento" data-tm-plano="{slug}" data-tm-prazo="mensal">'
+            f'{frase(slug)}</span>'
+        )
+        if alvo in t:
+            t = t.replace(alvo, novo, 1)
+            n += 1
+    print("tabela_1o_mes", n)
     return t
 
 
@@ -151,6 +191,7 @@ def main(out: str) -> None:
                 # heading puro, sem os sinais de tag
                 h = heading.replace(">", "").replace("<", "")
                 t = _marca_preco(t, h, slug)
+            t = _marca_tabela_mes(t)
         p.write_text(t, encoding="utf-8")
         print("atualizado", rel)
         injetados += 1
