@@ -15,7 +15,13 @@ RESUMO = """<section class="sec" id="cobrimos-oferta"><div class="wrap"><div cla
 <p class="actions"><a class="btn" href="/conta/cobrimos">Pedir a cobertura ›</a><a class="btn btn-ghost" href="/termos/#cobrimos">Ler as regras ›</a></p>
 </div></section>"""
 
-REGULAMENTO = """<h3 id="cobrimos">Programa Cobrimos a oferta</h3>
+STYLE = """<style id="tm-cobrimos-css">
+.tm-cobrimos-reg{position:relative;z-index:4;background:rgba(8,18,36,.92);border:1px solid rgba(201,166,70,.4);border-radius:14px;padding:1.25rem 1.35rem 1.45rem;margin:1.6rem 0 1.2rem;scroll-margin-top:5.5rem}
+.tm-cobrimos-reg h3{margin-top:0}
+</style>
+"""
+
+REGULAMENTO = """<div class="tm-cobrimos-reg" id="cobrimos"><h3>Programa Cobrimos a oferta</h3>
 <p>O programa Cobrimos a oferta permite pedir que a Têmis cubra o preço de um plano ou pacote equivalente de outra plataforma jurídica, com o plano da Têmis de mesmo nível. O pedido é feito na <a href="/conta/cobrimos">área do cliente</a>. A equipe responde em até 2 dias úteis. Cobrimos com o plano de capacidade equivalente. Há um valor mínimo por plano. Uma cobertura por CPF ou CNPJ; o valor coberto vale por 12 meses e, depois, segue a tabela em vigor, com aviso de 30 dias.</p>
 <p>Condições para o pedido ser analisado:</p>
 <ol>
@@ -25,6 +31,7 @@ REGULAMENTO = """<h3 id="cobrimos">Programa Cobrimos a oferta</h3>
 <li>A Têmis se reserva o direito de recusar o pedido, de cancelar o benefício e de cobrar a diferença, bem como de adotar as medidas administrativas ou judiciais cabíveis, se ficar comprovada fraude.</li>
 </ol>
 <p>Também não valem preço de primeiro mês, cupom pessoal, plano «sob consulta» sem proposta escrita ou produto que saiu de linha. A oferta precisa ser pública, atual e conferível (link ou print com data).</p>
+</div>
 """
 
 # âncora no comparativo, logo abaixo do título da seção
@@ -59,12 +66,18 @@ def patch_planos(html: str) -> str:
 
 
 def patch_termos(html: str) -> str:
-    if 'id="cobrimos"' in html:
+    if "tm-cobrimos-css" not in html:
+        html = html.replace("</head>", STYLE + "</head>", 1) if "</head>" in html else STYLE + html
+    if 'class="tm-cobrimos-reg"' in html:
+        _checa(REGULAMENTO, "/termos/")
         return html
     alvo = "<h3>Alterações e contato</h3>"
     if alvo not in html:
         raise SystemExit("[cobrimos_t2230u] seção «Alterações e contato» não encontrada em /termos/")
-    html = html.replace(alvo, REGULAMENTO + alvo, 1)
+    if 'id="cobrimos"' in html:
+        html = re.sub(r'<h3 id="cobrimos">[\s\S]*?(?=<h3>Alterações e contato</h3>)', REGULAMENTO, html, count=1)
+    else:
+        html = html.replace(alvo, REGULAMENTO + alvo, 1)
     _checa(REGULAMENTO, "/termos/")
     return html
 
