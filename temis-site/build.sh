@@ -25,4 +25,8 @@ python3 temis-site/erros_pos.py out
 python3 temis-site/marca_dagua_pos.py out
 # Medalhas douradas da escada de planos em /planos/ (Solo → Ultra, sem preços) — t1974u. Rollback: apagar só esta linha.
 python3 temis-site/escada_pos.py out
+# Tabela pública de preços (já aprovados), contagem do lançamento, comparativo por recurso e «Têmis Essencial — 7 dias para testar» em /planos/ (t2198u, aprovado em 24/11/2026). Rollback: apagar só esta linha.
+python3 temis-site/precos_pos.py out
+# Sem «assinatura», «gratuita» ou «grátis» no texto visível do site; chamada «sem custo no teste» (t2198u). Rollback: apagar só esta linha.
+python3 temis-site/palavras_pos.py out
 test -f out/index.html && echo "[temis-site] ok: $(find out -type f | wc -l) arquivos"

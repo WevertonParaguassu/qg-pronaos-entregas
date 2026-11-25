@@ -1,0 +1,190 @@
+{
+ "_nota": "t2198u (aprovado em 24/11/2026, t2200s9327): tabela de 23/11/2026, sem mudar valores. Gerado de vendas_config.json/planos.json/recursos_t2198u.json.",
+ "lancamento": {
+  "fim_epoch": 1801450799,
+  "fim_texto": "31/01/2027"
+ },
+ "planos": [
+  {
+   "id": "solo",
+   "nome": "Solo",
+   "cheio": 129,
+   "lancamento": 89,
+   "por_usuario": false,
+   "resumo": "1 advogado(a). Até 50 casos ativos, 100 minutas e 1.500 mensagens por mês.",
+   "usuarios": 1,
+   "casos": 50,
+   "minutas": 100,
+   "mensagens": 1500,
+   "armazenamento_gb": 5,
+   "recursos": {
+    "citacoes": true,
+    "calculos": [
+     "atualizacao",
+     "rescisao",
+     "atrasados",
+     "dosimetria",
+     "prescricao"
+    ],
+    "calculos_mes": 60,
+    "monitor_cnj": 10,
+    "monitor_oab": 0,
+    "transcricao_min_mes": 60,
+    "teses": true,
+    "modelos": 3,
+    "firmar": true,
+    "escritorio": true,
+    "cnpj": true
+   }
+  },
+  {
+   "id": "profissional",
+   "nome": "Profissional",
+   "cheio": 249,
+   "lancamento": 179,
+   "por_usuario": false,
+   "resumo": "Até 2 usuários. 200 casos ativos, 400 minutas e 5.000 mensagens por mês, processos maiores.",
+   "usuarios": 2,
+   "casos": 200,
+   "minutas": 400,
+   "mensagens": 5000,
+   "armazenamento_gb": 20,
+   "recursos": {
+    "citacoes": true,
+    "calculos": [
+     "atualizacao",
+     "rescisao",
+     "atrasados",
+     "dosimetria",
+     "prescricao"
+    ],
+    "calculos_mes": 250,
+    "monitor_cnj": 50,
+    "monitor_oab": 1,
+    "transcricao_min_mes": 300,
+    "teses": true,
+    "modelos": 10,
+    "firmar": true,
+    "escritorio": true,
+    "cnpj": true
+   }
+  },
+  {
+   "id": "escritorio",
+   "nome": "Escritório",
+   "cheio": 199,
+   "lancamento": 149,
+   "por_usuario": true,
+   "resumo": "A partir de 2 usuários. Casos e minutas compartilhados pela equipe, convite de colegas pela Área do cliente.",
+   "usuarios": 50,
+   "casos": 500,
+   "minutas": 1500,
+   "mensagens": 15000,
+   "armazenamento_gb": 50,
+   "recursos": {
+    "citacoes": true,
+    "calculos": [
+     "atualizacao",
+     "rescisao",
+     "atrasados",
+     "dosimetria",
+     "prescricao"
+    ],
+    "calculos_mes": 1000,
+    "monitor_cnj": 200,
+    "monitor_oab": 5,
+    "transcricao_min_mes": 900,
+    "teses": true,
+    "modelos": 30,
+    "firmar": true,
+    "escritorio": true,
+    "cnpj": true
+   }
+  },
+  {
+   "id": "max",
+   "nome": "Têmis Max",
+   "cheio": 797,
+   "lancamento": 597,
+   "por_usuario": false,
+   "resumo": "O seu agente Têmis pessoal: memória, estilo e aprendizado só do seu escritório, com um conjunto selecionado de Têmis.",
+   "usuarios": 10,
+   "casos": 1500,
+   "minutas": 2000,
+   "mensagens": 30000,
+   "armazenamento_gb": 150,
+   "recursos": {
+    "citacoes": true,
+    "calculos": [
+     "atualizacao",
+     "rescisao",
+     "atrasados",
+     "dosimetria",
+     "prescricao"
+    ],
+    "calculos_mes": 3000,
+    "monitor_cnj": 500,
+    "monitor_oab": 15,
+    "transcricao_min_mes": 2000,
+    "teses": true,
+    "modelos": 100,
+    "firmar": true,
+    "escritorio": true,
+    "cnpj": true
+   }
+  },
+  {
+   "id": "ultra",
+   "nome": "Têmis Ultra",
+   "cheio": 1497,
+   "lancamento": 1197,
+   "por_usuario": false,
+   "resumo": "O agente Têmis completo: 100% das Têmis, skills e identidades, os maiores limites, fila prioritária e volume extra por uso.",
+   "usuarios": 50,
+   "casos": 5000,
+   "minutas": 5000,
+   "mensagens": 100000,
+   "armazenamento_gb": 300,
+   "recursos": {
+    "citacoes": true,
+    "calculos": [
+     "atualizacao",
+     "rescisao",
+     "atrasados",
+     "dosimetria",
+     "prescricao"
+    ],
+    "calculos_mes": 100000,
+    "monitor_cnj": 2000,
+    "monitor_oab": 50,
+    "transcricao_min_mes": 6000,
+    "teses": true,
+    "modelos": 500,
+    "firmar": true,
+    "escritorio": true,
+    "cnpj": true
+   }
+  }
+ ],
+ "essencial": {
+  "nome": "Têmis Essencial",
+  "dias": 7,
+  "plano": "solo",
+  "recursos": {
+   "citacoes": true,
+   "calculos": [
+    "atualizacao",
+    "prescricao"
+   ],
+   "calculos_mes": 15,
+   "monitor_cnj": 3,
+   "monitor_oab": 0,
+   "transcricao_min_mes": 15,
+   "teses": true,
+   "modelos": 1,
+   "firmar": false,
+   "escritorio": true,
+   "cnpj": true
+  }
+ }
+}
