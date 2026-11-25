@@ -96,6 +96,40 @@ def home(h):
     h = re.sub(r'<section class="sec" id="demonstracao">.*?</section>\s*', '', h, count=1, flags=re.S)
     return h
 
+CPF_RE = re.compile(r"\b\d{3}\.\d{3}\.\d{3}-\d{2}\b")
+MASC = "***.***.***-**"
+def laboratorio():
+    """t2217u-lab: tira o CPF fictício (texto, imagens e PDF) e põe noindex no /laboratorio/."""
+    import base64, tarfile, io
+    b64 = HERE / "lab_red_t2217u.tgz.b64"
+    if b64.exists():
+        tf = tarfile.open(fileobj=io.BytesIO(base64.b64decode(b64.read_text())), mode="r:gz")
+        for m in tf.getmembers():
+            dado = tf.extractfile(m).read()
+            if m.name.endswith(".pdf"): alvos = [OUT / "laboratorio" / m.name]
+            else: alvos = [OUT / "img" / "laboratorio" / m.name] + ([OUT / "laboratorio" / "docs" / m.name] if m.name.startswith("doc-") else [])
+            for a in alvos:
+                if a.parent.exists(): a.write_bytes(dado)
+    for t in (OUT / "laboratorio").glob("*.txt"):
+        x = t.read_text(encoding="utf-8"); y = CPF_RE.sub(MASC, x)
+        if y != x: t.write_text(y, encoding="utf-8")
+    sm = OUT / "sitemap.xml"
+    if sm.exists():
+        x = sm.read_text(encoding="utf-8"); y = re.sub(r"<url><loc>[^<]*/laboratorio/</loc>.*?</url>\s*", "", x, flags=re.S)
+        if y != x: sm.write_text(y, encoding="utf-8")
+
+def lab_html(h):
+    h = CPF_RE.sub(MASC, h)
+    h = h.replace(f"({MASC} × {MASC}) — o revisor pediu confirmação; é um número fictício", f"({MASC} × {MASC}, dígitos ocultados) — o revisor pediu confirmação")
+    for n in ("doc-1", "doc-3", "peticao-1"):
+        h = h.replace(f"/img/laboratorio/{n}.webp?v=t1951u", f"/img/laboratorio/{n}.webp?v=t2217u")
+    for n in ("doc-1", "doc-3"):
+        h = h.replace(f'href="/laboratorio/docs/{n}.webp"', f'href="/laboratorio/docs/{n}.webp?v=t2217u"')
+    h = h.replace('href="/laboratorio/minuta-peticao-inicial.pdf"', 'href="/laboratorio/minuta-peticao-inicial.pdf?v=t2217u"')
+    if 'name="robots"' not in h: h = h.replace('<meta charset="utf-8">', '<meta charset="utf-8"><meta name="robots" content="noindex, nofollow" data-m="t2217u-lab">', 1)
+    else: h = re.sub(r'<meta name="robots" content="[^"]*"', '<meta name="robots" content="noindex, nofollow"', h, count=1)
+    return h
+
 def main():
     assets = OUT / "assets"; assets.mkdir(exist_ok=True)
     shutil.copy(HERE / "polish-t2217u.css", assets / "polish-t2217u.css")
@@ -113,9 +147,11 @@ def main():
         if rel == "planos/":
             h = h.replace('<tr class="tm-g"><th colspan="8">', '<tr class="tm-g"><th colspan="9">')
             h = h.replace('<div id="agente" id="max">', '<div id="agente" class="tm-max">')
+        if rel == "laboratorio/": h = lab_html(h)
         h = marca_nav(h, rel)
         if MARCA not in h and "</head>" in h: h = h.replace("</head>", LINK + "</head>", 1)
         if h != h0: f.write_text(h, encoding="utf-8"); n += 1
+    laboratorio()
     print(f"[polish_t2217u] ok: {n} páginas polidas")
 
 if __name__ == "__main__": main()
