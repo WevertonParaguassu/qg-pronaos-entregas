@@ -23,8 +23,12 @@ OUT = Path(sys.argv[1] if len(sys.argv) > 1 else "out")
 HERE = Path(__file__).parent
 MARCA = "t2225u-pwa"
 PKG = "com.agentetemis.app"
-# Impressão pública do certificado de upload (TWA). Não é segredo.
-SHA256 = "5F:AA:F3:E8:29:B0:53:04:55:1E:41:96:B9:4F:D7:C7:DA:83:CF:BA:3D:73:BB:77:41:33:E5:F2:3E:29:C5:D6"
+# Impressões públicas dos certificados (TWA). Não são segredo.
+# 1) chave de upload (keystore local)
+# 2) certificado com que a Play assina o app (App Signing)
+SHA256_UPLOAD = "5F:AA:F3:E8:29:B0:53:04:55:1E:41:96:B9:4F:D7:C7:DA:83:CF:BA:3D:73:BB:77:41:33:E5:F2:3E:29:C5:D6"
+SHA256_PLAY = "51:04:E5:A8:0B:59:D0:B4:63:53:25:CF:93:F4:47:72:39:A7:02:0D:FD:AC:E0:B1:A4:A1:65:1C:5A:CD:C9:07"
+SHA256S = [SHA256_UPLOAD, SHA256_PLAY]
 ORIGEM = "https://agentetemis.com"
 
 MANIFEST = {
@@ -63,7 +67,7 @@ ASSETLINKS = [
         "target": {
             "namespace": "android_app",
             "package_name": PKG,
-            "sha256_cert_fingerprints": [SHA256],
+            "sha256_cert_fingerprints": SHA256S,
         },
     }
 ]

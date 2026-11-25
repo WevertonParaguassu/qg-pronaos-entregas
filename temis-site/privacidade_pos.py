@@ -67,4 +67,72 @@ if p.exists():
             s = re.sub(r'(<meta (?:name="description"|property="og:description"|name="twitter:description") content=")[^"]*(")', lambda m: m.group(1) + DESC_SEG + m.group(2), s)
             p.write_text(s, encoding="utf-8"); n += 1
         else: print("[privacidade_pos] aviso: corpo da página Segurança não achado")
-print(f"[privacidade_pos] ok: {n} página(s) atualizada(s) (Segurança para leigos + Conselho das 4 com opt-in e anonimização)")
+
+# Ficha da Play Store / LGPD mais completa (t2232u): conta, pagamentos, app, criptografia
+# em trânsito e exclusão. Não usa as palavras vetadas. Sem nome, CPF ou CNPJ do titular.
+# Idempotente (marca t2232u-privacidade-loja).
+MARCA_LOJA = "<!--t2232u-privacidade-loja-->"
+DIREITOS_VELHO = (
+    "<h3>Seus direitos</h3><p>Peça acesso, correção ou exclusão dos seus dados pelo e-mail "
+    '<a href="mailto:temis@e-pronaos.com">temis@e-pronaos.com</a>.</p>'
+)
+DIREITOS_NOVO = (
+    "<h3>Dados da conta e do app Têmis</h3>"
+    "<p>Na área do cliente e no app Têmis (incluindo a versão instalável para Android), "
+    "coletamos os dados necessários para criar e manter a conta: e-mail, senha (guardada só em forma de hash) "
+    "e, quando informados, nome e CPF ou CNPJ para identificar a pessoa ou o escritório. O app exige login. "
+    "Os documentos do caso não ficam armazenados neste aparelho: o envio, a leitura e o armazenamento "
+    "acontecem nos servidores da Têmis, isolados por escritório.</p>"
+    "<h3>Pagamentos</h3>"
+    "<p>A contratação dos planos e o pagamento acontecem na área do cliente, no site ou no app, "
+    "pelos canais Stripe (cartão), Efí (Pix) e Mercado Pago. A Têmis não guarda o número completo do cartão. "
+    "Os prestadores de pagamento recebem os dados necessários para processar a cobrança, cumprir regras de "
+    "prevenção a fraudes e confirmar o pagamento. O histórico do plano contratado fica associado à conta "
+    "para prestar o serviço e emitir comprovantes.</p>"
+    "<h3>Documentos e conteúdo do trabalho</h3>"
+    "<p>Os arquivos e textos que você envia (peças, autos, imagens de documentos, planilhas, "
+    "áudios para transcrição e afins) são tratados para prestar o serviço: leitura, organização, análise, "
+    "minuta para revisão da profissional habilitada e ferramentas do plano. Por padrão, essa leitura ocorre "
+    "nos servidores da Têmis. Detalhes em <a href=\"/seguranca/\">Segurança e sigilo</a>.</p>"
+    "<h3>Proteção e retenção</h3>"
+    "<p>A comunicação entre o seu navegador ou o app Têmis e os nossos servidores usa criptografia em "
+    "trânsito (HTTPS/TLS). Mantemos os dados enquanto a conta estiver ativa e pelo prazo necessário ao "
+    "serviço e às obrigações legais. Depois da exclusão da conta, os dados do escritório são apagados ou "
+    "anonimizados, salvo o que a lei exigir conservar.</p>"
+    "<h3>Compartilhamento</h3>"
+    "<p>Não vendemos dados e não usamos os documentos do caso para publicidade. Compartilhamos dados apenas "
+    "com prestadores essenciais à operação (pagamento, correio eletrônico de avisos da conta) ou quando a lei "
+    "exigir. No plano Ultra, o Conselho das 4 só entra com o seu opt-in, e apenas com pergunta anonimizada, "
+    "como descrito acima.</p>"
+    "<h3>Seus direitos (LGPD)</h3>"
+    "<p>Você pode pedir acesso, correção, exclusão, portabilidade ou informação sobre o tratamento dos seus "
+    "dados, e também a exclusão da conta e dos documentos do escritório, pelo e-mail "
+    '<a href="mailto:temis@e-pronaos.com">temis@e-pronaos.com</a>. Responderemos pelo mesmo canal.</p>'
+    + MARCA_LOJA
+)
+
+def aplica_loja():
+    global n
+    pth = OUT / "privacidade/index.html"
+    if not pth.exists():
+        print("[privacidade_pos] aviso: privacidade/index.html não existe")
+        return
+    s = pth.read_text(encoding="utf-8")
+    if MARCA_LOJA in s:
+        return
+    if DIREITOS_VELHO in s:
+        s = s.replace(DIREITOS_VELHO, DIREITOS_NOVO, 1)
+        pth.write_text(s, encoding="utf-8")
+        n += 1
+        return
+    ancora = "</div></section></main>"
+    if ancora in s:
+        s = s.replace(ancora, DIREITOS_NOVO + ancora, 1)
+        pth.write_text(s, encoding="utf-8")
+        n += 1
+        return
+    print("[privacidade_pos] aviso: não achei o ponto de inserção da política ampliada")
+
+
+aplica_loja()
+print(f"[privacidade_pos] ok: {n} página(s) atualizada(s) (Segurança para leigos + Conselho das 4 com opt-in e anonimização + política LGPD da loja)")
