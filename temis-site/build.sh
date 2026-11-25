@@ -45,6 +45,8 @@ python3 temis-site/cobrimos_t2230u_pos.py out
 python3 temis-site/triagem_t2226u_pos.py out
 # Robôs de IA fora (t2231u): robots.txt com os robôs de IA, ai.txt e .well-known/tdmrep.json. Rollback: apagar só esta linha.
 python3 temis-site/antirobo_t2231u_pos.py out
+# Suporte e inauguração (t2235u): página /suporte/ com suportetemis@e-pronaos.com, linha de suporte no rodapé, aviso em /sugestoes/, faixa «Chegou a Têmis» na home (troca sozinha por semana: 78/65/50) e sitemap. Rollback: apagar só esta linha.
+python3 temis-site/suporte_t2235u_pos.py out
 # PWA instalável (t2225u): manifesto, service worker (cascão offline, sem cache de API/documentos), ícones maskable, botão Instalar o app Têmis e dica no iOS. Roda por último, depois das semanas. Rollback: apagar só esta linha.
 python3 temis-site/pwa_t2225u_pos.py out
 test -f out/index.html && echo "[temis-site] ok: $(find out -type f | wc -l) arquivos"
