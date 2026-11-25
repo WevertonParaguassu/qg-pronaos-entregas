@@ -37,6 +37,6 @@ python3 temis-site/medalhas_t2201u_pos.py out
 python3 temis-site/rampa_glossario_t2217u_pos.py out
 # Polimento final (t2217u): tipografia, cartões acima da estátua, home sem painel sintético, menu com a página atual, textos coerentes; folhas temis-conta.css/temis-app.css para /conta e o painel. Rollback: apagar só esta linha.
 python3 temis-site/polish_t2217u_pos.py out
-# PWA instalável (t2225u): manifesto, service worker (cascão offline, sem cache de API/documentos), ícones maskable, botão Instalar o app Têmis e dica no iOS. Rollback: apagar só esta linha.
-python3 temis-site/pwa_t2225u_pos.py out
+# Oferta da semana no 1º mês (78/65/50), contagem até o fim da semana e ?indicacao= (t2220u/t2221u). Rollback: apagar só esta linha.
+python3 temis-site/semanas_t2220u_pos.py out
 test -f out/index.html && echo "[temis-site] ok: $(find out -type f | wc -l) arquivos"

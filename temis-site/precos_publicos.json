@@ -1,431 +1,595 @@
 {
- "_nota": "t2217u + t2204u + t2201u + t2198u: tabela de 23/11/2026 nos planos Solo e acima. Pacotinhos Base e Prática em 'entrada' (precos_pos continua com exatamente 5 planos). Rampa de lançamento (−50/40/30/20/10, preço cheio a partir do 6º mês) para quem contrata até 31/05/2027 23h59 (Brasília). Skills Têmis a partir do Profissional. Conselho no Max com teto interno; Rodada só no Ultra. Sem cotas de modelo.",
- "lancamento": {
-  "fim_epoch": 1811818799,
-  "fim_texto": "31/05/2027"
- },
- "planos": [
-  {
-   "id": "solo",
-   "nome": "Têmis Solo",
-   "cheio": 129,
-   "lancamento": 89,
-   "por_usuario": false,
-   "resumo": "1 advogado(a). Volume de trabalho, firma A1, transcrição e modelos. Sem skills Têmis.",
-   "usuarios": 1,
-   "casos": 50,
-   "minutas": 100,
-   "mensagens": 1500,
-   "armazenamento_gb": 5,
-   "recursos": {
-    "citacoes": true,
-    "calculos": [
-     "atualizacao",
-     "prescricao"
-    ],
-    "calculos_mes": 60,
-    "monitor_cnj": 25,
-    "monitor_oab": 0,
-    "transcricao_min_mes": 60,
-    "teses": false,
-    "modelos": 3,
-    "firmar": true,
-    "escritorio": false,
-    "cnpj": true,
-    "skills_temis": false
-   },
-   "tag": "a pena"
+  "_nota": "t2220u/t2221u + t2217u + t2204u + t2201u + t2198u: tabela de 23/11/2026 nos planos Solo e acima. Pacotinhos Base e Prática em 'entrada'. Rampa de lançamento: 1º mês conforme a semana de contratação (semana 1 −78%, semana 2 −65%, a partir da semana 3 −50%), depois −40/−30/−20/−10, preço cheio a partir do 6º mês, para quem contrata até 31/05/2027 23h59 (Brasília). Skills Têmis a partir do Profissional. Conselho no Max com teto interno; Rodada só no Ultra. Sem cotas de modelo.",
+  "lancamento": {
+    "fim_epoch": 1811818799,
+    "fim_texto": "31/05/2027"
   },
-  {
-   "id": "profissional",
-   "nome": "Têmis Profissional",
-   "cheio": 249,
-   "lancamento": 179,
-   "por_usuario": false,
-   "resumo": "Até 2 usuários. Primeiras skills Têmis, plano de teses e jogo completo de calculadoras.",
-   "usuarios": 2,
-   "casos": 200,
-   "minutas": 400,
-   "mensagens": 5000,
-   "armazenamento_gb": 20,
-   "recursos": {
-    "citacoes": true,
-    "calculos": [
-     "atualizacao",
-     "rescisao",
-     "atrasados",
-     "dosimetria",
-     "prescricao"
-    ],
-    "calculos_mes": 250,
-    "monitor_cnj": 100,
-    "monitor_oab": 1,
-    "transcricao_min_mes": 300,
-    "teses": true,
-    "modelos": 10,
-    "firmar": true,
-    "escritorio": false,
-    "cnpj": true,
-    "skills_temis": true
-   },
-   "tag": "a balança"
-  },
-  {
-   "id": "escritorio",
-   "nome": "Têmis Escritório",
-   "cheio": 199,
-   "lancamento": 149,
-   "por_usuario": true,
-   "resumo": "A partir de 2 usuários. Casos e minutas compartilhados pela equipe, convite de colegas pela Área do cliente.",
-   "usuarios": 50,
-   "casos": 500,
-   "minutas": 1500,
-   "mensagens": 15000,
-   "armazenamento_gb": 50,
-   "recursos": {
-    "citacoes": true,
-    "calculos": [
-     "atualizacao",
-     "rescisao",
-     "atrasados",
-     "dosimetria",
-     "prescricao"
-    ],
-    "calculos_mes": 1000,
-    "monitor_cnj": 300,
-    "monitor_oab": 5,
-    "transcricao_min_mes": 900,
-    "teses": true,
-    "modelos": 30,
-    "firmar": true,
-    "escritorio": true,
-    "cnpj": true,
-    "skills_temis": true
-   },
-   "tag": "as colunas"
-  },
-  {
-   "id": "max",
-   "nome": "Têmis Max",
-   "cheio": 797,
-   "lancamento": 597,
-   "por_usuario": false,
-   "resumo": "O seu agente Têmis pessoal, com o Conselho das 4 em uso folgado e teto mensal interno. Sem Rodada completa. 3 usuários incluídos; cada extra no valor do Escritório.",
-   "usuarios": 3,
-   "casos": 1500,
-   "minutas": 2000,
-   "mensagens": 30000,
-   "armazenamento_gb": 150,
-   "recursos": {
-    "citacoes": true,
-    "calculos": [
-     "atualizacao",
-     "rescisao",
-     "atrasados",
-     "dosimetria",
-     "prescricao"
-    ],
-    "calculos_mes": 3000,
-    "monitor_cnj": 800,
-    "monitor_oab": 15,
-    "transcricao_min_mes": 2000,
-    "teses": true,
-    "modelos": 100,
-    "firmar": true,
-    "escritorio": true,
-    "cnpj": true,
-    "skills_temis": true
-   },
-   "tag": "o escudo",
-   "usuarios_incluidos": 3,
-   "usuario_extra": "escritorio"
-  },
-  {
-   "id": "ultra",
-   "nome": "Têmis Ultra",
-   "cheio": 1497,
-   "lancamento": 1197,
-   "por_usuario": false,
-   "resumo": "O agente Têmis completo: 100% das skills Têmis, Conselho com modelos de topo, vozes extras e Rodada completa. 8 usuários incluídos; cada extra no valor do Escritório.",
-   "usuarios": 8,
-   "casos": 5000,
-   "minutas": 5000,
-   "mensagens": 100000,
-   "armazenamento_gb": 300,
-   "recursos": {
-    "citacoes": true,
-    "calculos": [
-     "atualizacao",
-     "rescisao",
-     "atrasados",
-     "dosimetria",
-     "prescricao"
-    ],
-    "calculos_mes": 100000,
-    "monitor_cnj": 2000,
-    "monitor_oab": 50,
-    "transcricao_min_mes": 6000,
-    "teses": true,
-    "modelos": 500,
-    "firmar": true,
-    "escritorio": true,
-    "cnpj": true,
-    "skills_temis": true
-   },
-   "tag": "a coroa",
-   "usuarios_incluidos": 8,
-   "usuario_extra": "escritorio"
-  }
- ],
- "essencial": {
-  "nome": "Têmis Essencial",
-  "dias": 7,
-  "plano": "solo",
-  "recursos": {
-   "citacoes": true,
-   "calculos": [
-    "atualizacao"
-   ],
-   "calculos_mes": 5,
-   "monitor_cnj": 1,
-   "monitor_oab": 0,
-   "transcricao_min_mes": 0,
-   "teses": false,
-   "modelos": 0,
-   "firmar": false,
-   "escritorio": false,
-   "cnpj": false
-  },
-  "tag": "o primeiro passo"
- },
- "entrada": [
-  {
-   "id": "base",
-   "nome": "Têmis Base",
-   "cheio": 29,
-   "lancamento": 19,
-   "por_usuario": false,
-   "resumo": "1 advogado(a). Chat jurídico com fontes e conferência de citações. Sem skills Têmis.",
-   "usuarios": 1,
-   "casos": 8,
-   "minutas": 10,
-   "mensagens": 200,
-   "armazenamento_gb": 0.5,
-   "recursos": {
-    "citacoes": true,
-    "calculos": [
-     "atualizacao"
-    ],
-    "calculos_mes": 5,
-    "monitor_cnj": 3,
-    "monitor_oab": 0,
-    "transcricao_min_mes": 0,
-    "teses": false,
-    "modelos": 0,
-    "firmar": false,
-    "escritorio": false,
-    "cnpj": false,
-    "skills_temis": false
-   },
-   "tag": "a semente"
-  },
-  {
-   "id": "pratica",
-   "nome": "Têmis Prática",
-   "cheio": 49,
-   "lancamento": 39,
-   "por_usuario": false,
-   "resumo": "1 advogado(a). Tudo do Base, com mais volume, transcrição curta e um modelo .docx. Sem skills Têmis.",
-   "usuarios": 1,
-   "casos": 20,
-   "minutas": 40,
-   "mensagens": 600,
-   "armazenamento_gb": 2,
-   "recursos": {
-    "citacoes": true,
-    "calculos": [
-     "atualizacao",
-     "prescricao"
-    ],
-    "calculos_mes": 15,
-    "monitor_cnj": 8,
-    "monitor_oab": 0,
-    "transcricao_min_mes": 20,
-    "teses": false,
-    "modelos": 1,
-    "firmar": false,
-    "escritorio": false,
-    "cnpj": true,
-    "skills_temis": false
-   },
-   "tag": "o ofício"
-  }
- ],
- "rampa": {
-  "descontos_pct": [
-   50,
-   40,
-   30,
-   20,
-   10
+  "planos": [
+    {
+      "id": "solo",
+      "nome": "Têmis Solo",
+      "cheio": 129,
+      "lancamento": 89,
+      "por_usuario": false,
+      "resumo": "1 advogado(a). Volume de trabalho, firma A1, transcrição e modelos. Sem skills Têmis.",
+      "usuarios": 1,
+      "casos": 50,
+      "minutas": 100,
+      "mensagens": 1500,
+      "armazenamento_gb": 5,
+      "recursos": {
+        "citacoes": true,
+        "calculos": [
+          "atualizacao",
+          "prescricao"
+        ],
+        "calculos_mes": 60,
+        "monitor_cnj": 25,
+        "monitor_oab": 0,
+        "transcricao_min_mes": 60,
+        "teses": false,
+        "modelos": 3,
+        "firmar": true,
+        "escritorio": false,
+        "cnpj": true,
+        "skills_temis": false
+      },
+      "tag": "a pena"
+    },
+    {
+      "id": "profissional",
+      "nome": "Têmis Profissional",
+      "cheio": 249,
+      "lancamento": 179,
+      "por_usuario": false,
+      "resumo": "Até 2 usuários. Primeiras skills Têmis, plano de teses e jogo completo de calculadoras.",
+      "usuarios": 2,
+      "casos": 200,
+      "minutas": 400,
+      "mensagens": 5000,
+      "armazenamento_gb": 20,
+      "recursos": {
+        "citacoes": true,
+        "calculos": [
+          "atualizacao",
+          "rescisao",
+          "atrasados",
+          "dosimetria",
+          "prescricao"
+        ],
+        "calculos_mes": 250,
+        "monitor_cnj": 100,
+        "monitor_oab": 1,
+        "transcricao_min_mes": 300,
+        "teses": true,
+        "modelos": 10,
+        "firmar": true,
+        "escritorio": false,
+        "cnpj": true,
+        "skills_temis": true
+      },
+      "tag": "a balança"
+    },
+    {
+      "id": "escritorio",
+      "nome": "Têmis Escritório",
+      "cheio": 199,
+      "lancamento": 149,
+      "por_usuario": true,
+      "resumo": "A partir de 2 usuários. Casos e minutas compartilhados pela equipe, convite de colegas pela Área do cliente.",
+      "usuarios": 50,
+      "casos": 500,
+      "minutas": 1500,
+      "mensagens": 15000,
+      "armazenamento_gb": 50,
+      "recursos": {
+        "citacoes": true,
+        "calculos": [
+          "atualizacao",
+          "rescisao",
+          "atrasados",
+          "dosimetria",
+          "prescricao"
+        ],
+        "calculos_mes": 1000,
+        "monitor_cnj": 300,
+        "monitor_oab": 5,
+        "transcricao_min_mes": 900,
+        "teses": true,
+        "modelos": 30,
+        "firmar": true,
+        "escritorio": true,
+        "cnpj": true,
+        "skills_temis": true
+      },
+      "tag": "as colunas"
+    },
+    {
+      "id": "max",
+      "nome": "Têmis Max",
+      "cheio": 797,
+      "lancamento": 597,
+      "por_usuario": false,
+      "resumo": "O seu agente Têmis pessoal, com o Conselho das 4 em uso folgado e teto mensal interno. Sem Rodada completa. 3 usuários incluídos; cada extra no valor do Escritório.",
+      "usuarios": 3,
+      "casos": 1500,
+      "minutas": 2000,
+      "mensagens": 30000,
+      "armazenamento_gb": 150,
+      "recursos": {
+        "citacoes": true,
+        "calculos": [
+          "atualizacao",
+          "rescisao",
+          "atrasados",
+          "dosimetria",
+          "prescricao"
+        ],
+        "calculos_mes": 3000,
+        "monitor_cnj": 800,
+        "monitor_oab": 15,
+        "transcricao_min_mes": 2000,
+        "teses": true,
+        "modelos": 100,
+        "firmar": true,
+        "escritorio": true,
+        "cnpj": true,
+        "skills_temis": true
+      },
+      "tag": "o escudo",
+      "usuarios_incluidos": 3,
+      "usuario_extra": "escritorio"
+    },
+    {
+      "id": "ultra",
+      "nome": "Têmis Ultra",
+      "cheio": 1497,
+      "lancamento": 1197,
+      "por_usuario": false,
+      "resumo": "O agente Têmis completo: 100% das skills Têmis, Conselho com modelos de topo, vozes extras e Rodada completa. 8 usuários incluídos; cada extra no valor do Escritório.",
+      "usuarios": 8,
+      "casos": 5000,
+      "minutas": 5000,
+      "mensagens": 100000,
+      "armazenamento_gb": 300,
+      "recursos": {
+        "citacoes": true,
+        "calculos": [
+          "atualizacao",
+          "rescisao",
+          "atrasados",
+          "dosimetria",
+          "prescricao"
+        ],
+        "calculos_mes": 100000,
+        "monitor_cnj": 2000,
+        "monitor_oab": 50,
+        "transcricao_min_mes": 6000,
+        "teses": true,
+        "modelos": 500,
+        "firmar": true,
+        "escritorio": true,
+        "cnpj": true,
+        "skills_temis": true
+      },
+      "tag": "a coroa",
+      "usuarios_incluidos": 8,
+      "usuario_extra": "escritorio"
+    }
   ],
-  "cheia_a_partir": 6,
-  "inscricao_ate": "31/05/2027",
-  "inscricao_hora": "23h59, horário de Brasília"
- },
- "listas": {
-  "base": {
-   "apps": [
-    "Chat jurídico com fontes",
-    "Leitura dos autos (upload)",
-    "Minutas com anexos (.docx)",
-    "Jurisprudência Viva",
-    "Fontes do Direito"
-   ],
-   "skills": []
+  "essencial": {
+    "nome": "Têmis Essencial",
+    "dias": 7,
+    "plano": "solo",
+    "recursos": {
+      "citacoes": true,
+      "calculos": [
+        "atualizacao"
+      ],
+      "calculos_mes": 5,
+      "monitor_cnj": 1,
+      "monitor_oab": 0,
+      "transcricao_min_mes": 0,
+      "teses": false,
+      "modelos": 0,
+      "firmar": false,
+      "escritorio": false,
+      "cnpj": false
+    },
+    "tag": "o primeiro passo"
   },
-  "pratica": {
-   "apps": [
-    "Chat jurídico com fontes",
-    "Leitura dos autos (upload)",
-    "Minutas com anexos (.docx)",
-    "Jurisprudência Viva",
-    "Fontes do Direito"
-   ],
-   "skills": []
+  "entrada": [
+    {
+      "id": "base",
+      "nome": "Têmis Base",
+      "cheio": 29,
+      "lancamento": 19,
+      "por_usuario": false,
+      "resumo": "1 advogado(a). Chat jurídico com fontes e conferência de citações. Sem skills Têmis.",
+      "usuarios": 1,
+      "casos": 8,
+      "minutas": 10,
+      "mensagens": 200,
+      "armazenamento_gb": 0.5,
+      "recursos": {
+        "citacoes": true,
+        "calculos": [
+          "atualizacao"
+        ],
+        "calculos_mes": 5,
+        "monitor_cnj": 3,
+        "monitor_oab": 0,
+        "transcricao_min_mes": 0,
+        "teses": false,
+        "modelos": 0,
+        "firmar": false,
+        "escritorio": false,
+        "cnpj": false,
+        "skills_temis": false
+      },
+      "tag": "a semente"
+    },
+    {
+      "id": "pratica",
+      "nome": "Têmis Prática",
+      "cheio": 49,
+      "lancamento": 39,
+      "por_usuario": false,
+      "resumo": "1 advogado(a). Tudo do Base, com mais volume, transcrição curta e um modelo .docx. Sem skills Têmis.",
+      "usuarios": 1,
+      "casos": 20,
+      "minutas": 40,
+      "mensagens": 600,
+      "armazenamento_gb": 2,
+      "recursos": {
+        "citacoes": true,
+        "calculos": [
+          "atualizacao",
+          "prescricao"
+        ],
+        "calculos_mes": 15,
+        "monitor_cnj": 8,
+        "monitor_oab": 0,
+        "transcricao_min_mes": 20,
+        "teses": false,
+        "modelos": 1,
+        "firmar": false,
+        "escritorio": false,
+        "cnpj": true,
+        "skills_temis": false
+      },
+      "tag": "o ofício"
+    }
+  ],
+  "rampa": {
+    "descontos_pct": [
+      50,
+      40,
+      30,
+      20,
+      10
+    ],
+    "cheia_a_partir": 6,
+    "inscricao_ate": "31/05/2027",
+    "inscricao_hora": "23h59, horário de Brasília",
+    "inscricao_epoch": 1811818799,
+    "semanas": {
+      "1": {
+        "inicio": "2026-11-25T06:00:00-03:00",
+        "inicio_epoch": 1795597200,
+        "inicio_texto": "25/11/2026 06:00, horário de Brasília",
+        "fim": "2026-12-02T05:59:59-03:00",
+        "fim_epoch": 1796201999,
+        "fim_texto": "02/12/2026 05:59, horário de Brasília",
+        "mes1_pct": 78
+      },
+      "2": {
+        "inicio": "2026-12-02T06:00:00-03:00",
+        "inicio_epoch": 1796202000,
+        "inicio_texto": "02/12/2026 06:00, horário de Brasília",
+        "fim": "2026-12-09T05:59:59-03:00",
+        "fim_epoch": 1796806799,
+        "fim_texto": "09/12/2026 05:59, horário de Brasília",
+        "mes1_pct": 65
+      },
+      "3": {
+        "inicio": "2026-12-09T06:00:00-03:00",
+        "inicio_epoch": 1796806800,
+        "inicio_texto": "09/12/2026 06:00, horário de Brasília",
+        "fim": "2027-05-31T23:59:59-03:00",
+        "fim_epoch": 1811818799,
+        "fim_texto": "31/05/2027 23:59, horário de Brasília",
+        "mes1_pct": 50
+      }
+    },
+    "precos_centavos": {
+      "1": {
+        "base": {
+          "mensal": 638,
+          "anual": 25192,
+          "bienal": 51550,
+          "trienal": 74428
+        },
+        "pratica": {
+          "mensal": 1078,
+          "anual": 42566,
+          "bienal": 87102,
+          "trienal": 125758
+        },
+        "solo": {
+          "mensal": 2838,
+          "anual": 112062,
+          "bienal": 229310,
+          "trienal": 331078
+        },
+        "profissional": {
+          "mensal": 5478,
+          "anual": 216306,
+          "bienal": 442622,
+          "trienal": 639058
+        },
+        "escritorio": {
+          "mensal": 4378,
+          "anual": 172871,
+          "bienal": 353742,
+          "trienal": 510734
+        },
+        "max": {
+          "mensal": 17534,
+          "anual": 692354,
+          "bienal": 1416747,
+          "trienal": 2045500
+        },
+        "ultra": {
+          "mensal": 32934,
+          "anual": 1300444,
+          "bienal": 2661067,
+          "trienal": 3842050
+        }
+      },
+      "2": {
+        "base": {
+          "mensal": 1015,
+          "anual": 25513,
+          "bienal": 51852,
+          "trienal": 74711
+        },
+        "pratica": {
+          "mensal": 1715,
+          "anual": 43108,
+          "bienal": 87612,
+          "trienal": 126236
+        },
+        "solo": {
+          "mensal": 4515,
+          "anual": 113488,
+          "bienal": 230652,
+          "trienal": 332336
+        },
+        "profissional": {
+          "mensal": 8715,
+          "anual": 219058,
+          "bienal": 445212,
+          "trienal": 641486
+        },
+        "escritorio": {
+          "mensal": 6965,
+          "anual": 175070,
+          "bienal": 355812,
+          "trienal": 512674
+        },
+        "max": {
+          "mensal": 27895,
+          "anual": 701161,
+          "bienal": 1425036,
+          "trienal": 2053271
+        },
+        "ultra": {
+          "mensal": 52395,
+          "anual": 1316986,
+          "bienal": 2676636,
+          "trienal": 3856646
+        }
+      },
+      "3": {
+        "base": {
+          "mensal": 1450,
+          "anual": 25882,
+          "bienal": 52200,
+          "trienal": 75038
+        },
+        "pratica": {
+          "mensal": 2450,
+          "anual": 43732,
+          "bienal": 88200,
+          "trienal": 126788
+        },
+        "solo": {
+          "mensal": 6450,
+          "anual": 115132,
+          "bienal": 232200,
+          "trienal": 333788
+        },
+        "profissional": {
+          "mensal": 12450,
+          "anual": 222232,
+          "bienal": 448200,
+          "trienal": 644288
+        },
+        "escritorio": {
+          "mensal": 9950,
+          "anual": 177608,
+          "bienal": 358200,
+          "trienal": 514912
+        },
+        "max": {
+          "mensal": 39850,
+          "anual": 711322,
+          "bienal": 1434600,
+          "trienal": 2062238
+        },
+        "ultra": {
+          "mensal": 74850,
+          "anual": 1336072,
+          "bienal": 2694600,
+          "trienal": 3873488
+        }
+      }
+    }
   },
-  "solo": {
-   "apps": [
-    "Chat jurídico com fontes",
-    "Leitura dos autos (upload)",
-    "Minutas com anexos (.docx)",
-    "Jurisprudência Viva",
-    "Fontes do Direito"
-   ],
-   "skills": []
-  },
-  "profissional": {
-   "apps": [
-    "Chat jurídico com fontes",
-    "Leitura dos autos (upload)",
-    "Minutas com anexos (.docx)",
-    "Jurisprudência Viva",
-    "Fontes do Direito"
-   ],
-   "skills": [
-    "Probatória",
-    "Advogado do Diabo",
-    "Protetora Leal",
-    "Auditoria Jurídica",
-    "Estratégia Recursal",
-    "Documental & Diagramação",
-    "Ingestão Processual",
-    "Pericial",
-    "Cálculos Jurídicos"
-   ]
-  },
-  "escritorio": {
-   "apps": [
-    "Chat jurídico com fontes",
-    "Leitura dos autos (upload)",
-    "Minutas com anexos (.docx)",
-    "Jurisprudência Viva",
-    "Fontes do Direito",
-    "Têmis Central",
-    "Memória do Escritório",
-    "Radar Processual",
-    "Equipe e convites",
-    "Hub Jurídico",
-    "Especialistas Jurídicos"
-   ],
-   "skills": [
-    "Probatória",
-    "Advogado do Diabo",
-    "Protetora Leal",
-    "Auditoria Jurídica",
-    "Estratégia Recursal",
-    "Documental & Diagramação",
-    "Ingestão Processual",
-    "Pericial",
-    "Cálculos Jurídicos"
-   ]
-  },
-  "max": {
-   "apps": [
-    "Chat jurídico com fontes",
-    "Leitura dos autos (upload)",
-    "Minutas com anexos (.docx)",
-    "Jurisprudência Viva",
-    "Fontes do Direito",
-    "Têmis Central",
-    "Memória do Escritório",
-    "Radar Processual",
-    "Equipe e convites",
-    "Agente Têmis pessoal do escritório (memória, estilo e aprendizado próprios)",
-    "Hub Jurídico",
-    "Especialistas Jurídicos"
-   ],
-   "skills": [
-    "Probatória",
-    "Advogado do Diabo",
-    "Protetora Leal",
-    "Auditoria Jurídica",
-    "Estratégia Recursal",
-    "Documental & Diagramação",
-    "Órganon Jurídico",
-    "AGÔN",
-    "Cartografia Humana Processual",
-    "Destrancamento Processual",
-    "Audaciosa",
-    "Ingestão Processual",
-    "Pericial",
-    "Cálculos Jurídicos",
-    "Outcome Loop",
-    "Cúpula",
-    "NOÛS",
-    "POLITEÍA"
-   ]
-  },
-  "ultra": {
-   "apps": [
-    "Chat jurídico com fontes",
-    "Leitura dos autos (upload)",
-    "Minutas com anexos (.docx)",
-    "Jurisprudência Viva",
-    "Fontes do Direito",
-    "Têmis Central",
-    "Memória do Escritório",
-    "Radar Processual",
-    "Equipe e convites",
-    "Agente Têmis pessoal do escritório (memória, estilo e aprendizado próprios)",
-    "Modo agêntico completo (todas as Têmis, skills e identidades)",
-    "Fila prioritária",
-    "Volume acima do pacote, cobrado por uso",
-    "Hub Jurídico",
-    "Especialistas Jurídicos"
-   ],
-   "skills": [
-    "Probatória",
-    "Advogado do Diabo",
-    "Protetora Leal",
-    "Auditoria Jurídica",
-    "Estratégia Recursal",
-    "Documental & Diagramação",
-    "Órganon Jurídico",
-    "AGÔN",
-    "Cartografia Humana Processual",
-    "Destrancamento Processual",
-    "Audaciosa",
-    "Reflexa",
-    "Evolutiva",
-    "NOÛS",
-    "Pericial",
-    "POLITEÍA",
-    "Cúpula",
-    "Outcome Loop",
-    "Ingestão Processual",
-    "Cálculos Jurídicos"
-   ]
+  "listas": {
+    "base": {
+      "apps": [
+        "Chat jurídico com fontes",
+        "Leitura dos autos (upload)",
+        "Minutas com anexos (.docx)",
+        "Jurisprudência Viva",
+        "Fontes do Direito"
+      ],
+      "skills": []
+    },
+    "pratica": {
+      "apps": [
+        "Chat jurídico com fontes",
+        "Leitura dos autos (upload)",
+        "Minutas com anexos (.docx)",
+        "Jurisprudência Viva",
+        "Fontes do Direito"
+      ],
+      "skills": []
+    },
+    "solo": {
+      "apps": [
+        "Chat jurídico com fontes",
+        "Leitura dos autos (upload)",
+        "Minutas com anexos (.docx)",
+        "Jurisprudência Viva",
+        "Fontes do Direito"
+      ],
+      "skills": []
+    },
+    "profissional": {
+      "apps": [
+        "Chat jurídico com fontes",
+        "Leitura dos autos (upload)",
+        "Minutas com anexos (.docx)",
+        "Jurisprudência Viva",
+        "Fontes do Direito"
+      ],
+      "skills": [
+        "Probatória",
+        "Advogado do Diabo",
+        "Protetora Leal",
+        "Auditoria Jurídica",
+        "Estratégia Recursal",
+        "Documental & Diagramação",
+        "Ingestão Processual",
+        "Pericial",
+        "Cálculos Jurídicos"
+      ]
+    },
+    "escritorio": {
+      "apps": [
+        "Chat jurídico com fontes",
+        "Leitura dos autos (upload)",
+        "Minutas com anexos (.docx)",
+        "Jurisprudência Viva",
+        "Fontes do Direito",
+        "Têmis Central",
+        "Memória do Escritório",
+        "Radar Processual",
+        "Equipe e convites",
+        "Hub Jurídico",
+        "Especialistas Jurídicos"
+      ],
+      "skills": [
+        "Probatória",
+        "Advogado do Diabo",
+        "Protetora Leal",
+        "Auditoria Jurídica",
+        "Estratégia Recursal",
+        "Documental & Diagramação",
+        "Ingestão Processual",
+        "Pericial",
+        "Cálculos Jurídicos"
+      ]
+    },
+    "max": {
+      "apps": [
+        "Chat jurídico com fontes",
+        "Leitura dos autos (upload)",
+        "Minutas com anexos (.docx)",
+        "Jurisprudência Viva",
+        "Fontes do Direito",
+        "Têmis Central",
+        "Memória do Escritório",
+        "Radar Processual",
+        "Equipe e convites",
+        "Agente Têmis pessoal do escritório (memória, estilo e aprendizado próprios)",
+        "Hub Jurídico",
+        "Especialistas Jurídicos"
+      ],
+      "skills": [
+        "Probatória",
+        "Advogado do Diabo",
+        "Protetora Leal",
+        "Auditoria Jurídica",
+        "Estratégia Recursal",
+        "Documental & Diagramação",
+        "Órganon Jurídico",
+        "AGÔN",
+        "Cartografia Humana Processual",
+        "Destrancamento Processual",
+        "Audaciosa",
+        "Ingestão Processual",
+        "Pericial",
+        "Cálculos Jurídicos",
+        "Outcome Loop",
+        "Cúpula",
+        "NOÛS",
+        "POLITEÍA"
+      ]
+    },
+    "ultra": {
+      "apps": [
+        "Chat jurídico com fontes",
+        "Leitura dos autos (upload)",
+        "Minutas com anexos (.docx)",
+        "Jurisprudência Viva",
+        "Fontes do Direito",
+        "Têmis Central",
+        "Memória do Escritório",
+        "Radar Processual",
+        "Equipe e convites",
+        "Agente Têmis pessoal do escritório (memória, estilo e aprendizado próprios)",
+        "Modo agêntico completo (todas as Têmis, skills e identidades)",
+        "Fila prioritária",
+        "Volume acima do pacote, cobrado por uso",
+        "Hub Jurídico",
+        "Especialistas Jurídicos"
+      ],
+      "skills": [
+        "Probatória",
+        "Advogado do Diabo",
+        "Protetora Leal",
+        "Auditoria Jurídica",
+        "Estratégia Recursal",
+        "Documental & Diagramação",
+        "Órganon Jurídico",
+        "AGÔN",
+        "Cartografia Humana Processual",
+        "Destrancamento Processual",
+        "Audaciosa",
+        "Reflexa",
+        "Evolutiva",
+        "NOÛS",
+        "Pericial",
+        "POLITEÍA",
+        "Cúpula",
+        "Outcome Loop",
+        "Ingestão Processual",
+        "Cálculos Jurídicos"
+      ]
+    }
   }
- }
 }
